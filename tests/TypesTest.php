@@ -69,7 +69,7 @@ class TypesTest extends \PHPUnit_Framework_TestCase
     {
         $type = Types::dateTime();
         $this->assertSame($expectedResult, $type->validate($value, 'key', $this->createMock(CollectorInterface::class)));
-        $this->assertSame('DateTime', $type->getDeclaration());
+        $this->assertSame('datetime', $type->getDeclaration());
     }
 
     public function providerDateTime()
@@ -315,6 +315,16 @@ class TypesTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($type->validate([1, '2', 3], 'key', $this->createMock(CollectorInterface::class)));
 
         $this->assertSame('integer[]', $type->getDeclaration());
+    }
+
+    public function testClassOf()
+    {
+        $type = Types::classOf(\DateTime::class);
+
+        $this->assertTrue($type->validate(new \DateTime(), 'key', $this->createMock(CollectorInterface::class)));
+        $this->assertFalse($type->validate(new \DateTimeImmutable(), 'key', $this->createMock(CollectorInterface::class)));
+
+        $this->assertSame(\DateTime::class, $type->getDeclaration());
     }
 
     public function testOneOf()

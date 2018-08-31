@@ -4,6 +4,7 @@ namespace Emonkak\Validation;
 
 use Emonkak\Validation\Type\Any;
 use Emonkak\Validation\Type\ArrayOf;
+use Emonkak\Validation\Type\ClassOf;
 use Emonkak\Validation\Type\Filter;
 use Emonkak\Validation\Type\OneOf;
 use Emonkak\Validation\Type\OneOfType;
@@ -45,7 +46,7 @@ final class Types
      */
     public static function dateTime()
     {
-        return new PatternOf('DateTime', '/^' . self::DATE_PATTERN . ' ' . self::TIME_PATTERN . '$/');
+        return new PatternOf('datetime', '/^' . self::DATE_PATTERN . ' ' . self::TIME_PATTERN . '$/');
     }
 
     /**
@@ -118,6 +119,15 @@ final class Types
     public static function arrayOf(TypeInterface $type)
     {
         return new ArrayOf($type);
+    }
+
+    /**
+     * @param string $class
+     * @return TypeInterface
+     */
+    public static function classOf($class)
+    {
+        return new ClassOf($class);
     }
 
     /**
