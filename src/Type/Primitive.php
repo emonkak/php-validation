@@ -6,6 +6,7 @@ use Emonkak\Validation\Collector\CollectorInterface;
 
 class Primitive implements TypeInterface
 {
+    use ConstraintTrait;
     use OptionalTrait;
 
     /**
@@ -32,10 +33,10 @@ class Primitive implements TypeInterface
     /**
      * {@inheritDoc}
      */
-    public function validate($value, $key, CollectorInterface $collector)
+    public function validate($key, $value, CollectorInterface $collector)
     {
         if (gettype($value) !== $this->declaration) {
-            $collector->collect($value, $key, $this);
+            $collector->collectTypeError($key, $value, $this);
             return false;
         }
         return true;

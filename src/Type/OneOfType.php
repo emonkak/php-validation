@@ -7,6 +7,7 @@ use Emonkak\Validation\Collector\NullCollector;
 
 class OneOfType implements TypeInterface
 {
+    use ConstraintTrait;
     use OptionalTrait;
 
     /**
@@ -28,26 +29,26 @@ class OneOfType implements TypeInterface
             $declarations[] = $type->getDeclaration();
         }
 
-        return implode('|', $declarations);
+        return '(' . implode('|', $declarations) . ')';
     }
 
     /**
      * {@inheritDoc}
      */
-    public function validate($value, $key, CollectorInterface $collector)
+    public function validate($key, $value, CollectorInterface $collector)
     {
         $isValid = false;
         $nullCollector = new NullCollector();
 
         foreach ($this->types as $type) {
-            if ($type->validate($value, $key, $nullCollector)) {
+            if ($type->validate($key, $value, $nullCollector)) {
                 $isValid = true;
                 break;
             }
         }
 
         if (!$isValid) {
-            $collector->collect($value, $key, $this);
+            $collector->collectTypeError($key, $value, $this);
         }
 
         return $isValid;

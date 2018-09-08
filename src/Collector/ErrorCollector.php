@@ -2,14 +2,16 @@
 
 namespace Emonkak\Validation\Collector;
 
-use Emonkak\Validation\Error;
+use Emonkak\Validation\ConstraintError;
+use Emonkak\Validation\Constraint\ConstraintInterface;
 use Emonkak\Validation\ErrorBagInterface;
+use Emonkak\Validation\TypeError;
 use Emonkak\Validation\Type\TypeInterface;
 
 class ErrorCollector implements CollectorInterface, ErrorBagInterface
 {
     /**
-     * @var Error[]
+     * @var ErrorInterface[]
      */
     private $errors = [];
 
@@ -46,8 +48,16 @@ class ErrorCollector implements CollectorInterface, ErrorBagInterface
     /**
      * {@inheritDoc}
      */
-    public function collect($value, $key, TypeInterface $type)
+    public function collectTypeError($key, $value, TypeInterface $type)
     {
-        $this->errors[] = new Error($key, $type->getDeclaration(), gettype($value));
+        $this->errors[] = new TypeError($key, $value, $type);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function collectConstraintError($key, $value, ConstraintInterface $constraint)
+    {
+        $this->errors[] = new ConstraintError($key, $value, $constraint);
     }
 }

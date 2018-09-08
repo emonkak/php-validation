@@ -20,14 +20,15 @@ class ClassOfTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidateReturnsTrue($class, $value)
     {
+        $key = 'foo';
         $type = new ClassOf($class);
 
         $collector = $this->createMock(CollectorInterface::class);
         $collector
             ->expects($this->never())
-            ->method('collect');
+            ->method('collectTypeError');
 
-        $this->assertTrue($type->validate($value, 'foo', $collector));
+        $this->assertTrue($type->validate($key, $value, $collector));
     }
 
     public function providerValidateReturnsTrue()
@@ -44,19 +45,20 @@ class ClassOfTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidateReturnsFalse($class, $value)
     {
+        $key = 'foo';
         $type = new ClassOf($class);
 
         $collector = $this->createMock(CollectorInterface::class);
         $collector
             ->expects($this->once())
-            ->method('collect')
+            ->method('collectTypeError')
             ->with(
+                $this->identicalTo($key),
                 $this->identicalTo($value),
-                $this->identicalTo('foo'),
                 $this->identicalTo($type)
             );
 
-        $this->assertFalse($type->validate($value, 'foo', $collector));
+        $this->assertFalse($type->validate($key, $value, $collector));
     }
 
     public function providerValidateReturnsFalse()

@@ -6,6 +6,7 @@ use Emonkak\Validation\Collector\CollectorInterface;
 
 class OneOf implements TypeInterface
 {
+    use ConstraintTrait;
     use OptionalTrait;
 
     /**
@@ -27,16 +28,16 @@ class OneOf implements TypeInterface
      */
     public function getDeclaration()
     {
-        return implode('|', array_map('json_encode', $this->expectedValues));
+        return '(' . implode('|', array_map('json_encode', $this->expectedValues)) . ')';
     }
 
     /**
      * {@inheritDoc}
      */
-    public function validate($value, $key, CollectorInterface $collector)
+    public function validate($key, $value, CollectorInterface $collector)
     {
         if (!in_array($value, $this->expectedValues)) {
-            $collector->collect($value, $key, $this);
+            $collector->collectTypeError($key, $value, $this);
             return false;
         }
         return true;

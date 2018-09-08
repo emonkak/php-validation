@@ -8,7 +8,7 @@ use Emonkak\Validation\Type\Primitive;
 /**
  * @covers Emonkak\Validation\Type\Primitive
  */
-class StrTest extends \PHPUnit_Framework_TestCase
+class PrimitiveTest extends \PHPUnit_Framework_TestCase
 {
     public function testGetDeclaration()
     {
@@ -21,14 +21,15 @@ class StrTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidateReturnsTrue($declaration, $value)
     {
+        $key = 'foo';
         $type = new Primitive($declaration);
 
         $collector = $this->createMock(CollectorInterface::class);
         $collector
             ->expects($this->never())
-            ->method('collect');
+            ->method('collectTypeError');
 
-        $this->assertTrue($type->validate($value, 'foo', $collector));
+        $this->assertTrue($type->validate($key, $value, $collector));
     }
 
     public function providerValidateReturnsTrue()
@@ -51,19 +52,20 @@ class StrTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidateReturnsFalse($declaration, $value)
     {
+        $key = 'foo';
         $type = new Primitive($declaration);
 
         $collector = $this->createMock(CollectorInterface::class);
         $collector
             ->expects($this->once())
-            ->method('collect')
+            ->method('collectTypeError')
             ->with(
-                $this->identicalTo($value),
                 $this->identicalTo('foo'),
+                $this->identicalTo($value),
                 $this->identicalTo($type)
             );
 
-        $this->assertFalse($type->validate($value, 'foo', $collector));
+        $this->assertFalse($type->validate($key, $value, $collector));
     }
 
     public function providerValidateReturnsFalse()

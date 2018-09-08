@@ -6,6 +6,8 @@ use Emonkak\Validation\Collector\CollectorInterface;
 
 class Optional implements TypeInterface
 {
+    use ConstraintTrait;
+
     /**
      * @var TypeInterface
      */
@@ -20,22 +22,29 @@ class Optional implements TypeInterface
     }
 
     /**
-     * {@inheritDoc}
+     * @return TypeInterface
      */
-    public function getDeclaration()
+    public function getType()
     {
-        $declaration = $this->type->getDeclaration();
-        $isUnionType = strpos($declaration, '|') !== false;
-        return '?' . ($isUnionType ? "($declaration)" : $declaration);
+        return $this->type;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function validate($value, $key, CollectorInterface $collector)
+    public function getDeclaration()
+    {
+        $declaration = $this->type->getDeclaration();
+        return '?' . $declaration;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function validate($key, $value, CollectorInterface $collector)
     {
         if ($value !== null) {
-            if (!$this->type->validate($value, $key, $collector)) {
+            if (!$this->type->validate($key, $value, $collector)) {
                 return false;
             }
         }

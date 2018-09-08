@@ -6,6 +6,7 @@ use Emonkak\Validation\Collector\CollectorInterface;
 
 class Filter implements TypeInterface
 {
+    use ConstraintTrait;
     use OptionalTrait;
 
     /**
@@ -26,7 +27,7 @@ class Filter implements TypeInterface
     /**
      * @param string $declaration
      * @param string $filter
-     * @param mixed $options
+     * @param mixed  $options
      */
     public function __construct($declaration, $filter, $options = null)
     {
@@ -46,17 +47,26 @@ class Filter implements TypeInterface
     /**
      * {@inheritDoc}
      */
-    public function validate($value, $key, CollectorInterface $collector)
+    public function validate($key, $value, CollectorInterface $collector)
     {
-        $result = $this->options !== null
-            ? filter_var($value, $this->filter, $this->options)
-            : filter_var($value, $this->filter);
+        $result = $this->doFilter($value);
 
         if (gettype($result) !== $this->declaration) {
-            $collector->collect($value, $key, $this);
+            $collector->collectTypeError($key, $value, $this);
             return false;
         }
 
         return true;
+    }
+
+    /**
+     * @param mixed $value
+     * @return mixed
+     */
+    private function doFilter($value)
+    {
+        return $this->options !== null
+            ? filter_var($value, $this->filter, $this->options)
+            : filter_var($value, $this->filter);
     }
 }

@@ -31,7 +31,7 @@ class Validator
         foreach ($this->types as $key => $type) {
             $value = isset($data[$key]) ? $data[$key] : null;
 
-            $type->validate($value, $key, $collector);
+            $type->validate($key, $value, $collector);
         }
 
         return $collector;

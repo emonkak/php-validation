@@ -6,6 +6,7 @@ use Emonkak\Validation\Collector\CollectorInterface;
 
 class ArrayOf implements TypeInterface
 {
+    use ConstraintTrait;
     use OptionalTrait;
 
     /**
@@ -26,24 +27,23 @@ class ArrayOf implements TypeInterface
     public function getDeclaration()
     {
         $declaration = $this->type->getDeclaration();
-        $isUnionType = strpos($declaration, '|') !== false;
-        return ($isUnionType ? "($declaration)" : $declaration) . '[]';
+        return $declaration . '[]';
     }
 
     /**
      * {@inheritDoc}
      */
-    public function validate($value, $key, CollectorInterface $collector)
+    public function validate($key, $value, CollectorInterface $collector)
     {
         if (!is_array($value)) {
-            $collector->collect($value, $key, $this);
+            $collector->collectTypeError($key, $value, $this);
             return false;
         }
 
         $isValid = true;
 
         foreach ($value as $index => $element) {
-            if (!$this->type->validate($element, $key . '[' . $index . ']', $collector)) {
+            if (!$this->type->validate($key . '[' . $index . ']', $element, $collector)) {
                 $isValid = false;
             }
         }

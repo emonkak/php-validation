@@ -3,7 +3,9 @@
 namespace Emonkak\Validation\Tests\Collector;
 
 use Emonkak\Validation\Collector\ErrorCollector;
-use Emonkak\Validation\Error;
+use Emonkak\Validation\ConstraintError;
+use Emonkak\Validation\Constraint\ConstraintInterface;
+use Emonkak\Validation\TypeError;
 use Emonkak\Validation\Type\TypeInterface;
 
 /**
@@ -11,19 +13,31 @@ use Emonkak\Validation\Type\TypeInterface;
  */
 class ErrorCollectorTest extends \PHPUnit_Framework_TestCase
 {
-    public function testCollect()
+    public function testCollectTypeError()
     {
+        $key = 'key';
+        $value = 'value';
         $type = $this->createMock(TypeInterface::class);
-        $type
-            ->expects($this->once())
-            ->method('getDeclaration')
-            ->willReturn('string');
 
         $collector = new ErrorCollector();
-        $collector->collect(true, 'foo', $type);
+        $collector->collectTypeError($key, $value, $type);
 
         $this->assertCount(1, $collector);
-        $this->assertEquals(['foo' => [new Error('foo',  'string', 'boolean')]], $collector->getErrors());
-        $this->assertEquals([new Error('foo',  'string', 'boolean')], $collector->toArray());
+        $this->assertEquals([$key => [new TypeError($key, $value, $type)]], $collector->getErrors());
+        $this->assertEquals([new TypeError($key, $value, $type)], $collector->toArray());
+    }
+
+    public function testCollectConstraintError()
+    {
+        $key = 'key';
+        $value = 'value';
+        $constraint = $this->createMock(ConstraintInterface::class);
+
+        $collector = new ErrorCollector();
+        $collector->collectConstraintError($key, $value, $constraint);
+
+        $this->assertCount(1, $collector);
+        $this->assertEquals([$key => [new ConstraintError($key, $value, $constraint)]], $collector->getErrors());
+        $this->assertEquals([new ConstraintError($key, $value, $constraint)], $collector->toArray());
     }
 }

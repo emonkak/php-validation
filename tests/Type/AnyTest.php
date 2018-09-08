@@ -20,14 +20,15 @@ class AnyTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidateReturnsTrue($value)
     {
+        $key = 'foo';
         $type = new Any();
 
         $collector = $this->createMock(CollectorInterface::class);
         $collector
             ->expects($this->never())
-            ->method('collect');
+            ->method('collectTypeError');
 
-        $this->assertTrue($type->validate($value, 'foo', $collector));
+        $this->assertTrue($type->validate($key, $value, $collector));
     }
 
     public function providerValidateReturnsTrue()
@@ -43,18 +44,19 @@ class AnyTest extends \PHPUnit_Framework_TestCase
 
     public function testValidateReturnsFalse()
     {
+        $key = 'foo';
         $type = new Any();
 
         $collector = $this->createMock(CollectorInterface::class);
         $collector
             ->expects($this->once())
-            ->method('collect')
+            ->method('collectTypeError')
             ->with(
+                $this->identicalTo($key),
                 $this->identicalTo(null),
-                $this->identicalTo('foo'),
                 $this->identicalTo($type)
             );
 
-        $this->assertFalse($type->validate(null, 'foo', $collector));
+        $this->assertFalse($type->validate($key, null, $collector));
     }
 }

@@ -12,10 +12,10 @@ interface TypeInterface
     public function getDeclaration();
 
     /**
-     * @param mixed                   $value
-     * @param string                  $key
+     * @param mixed              $value
+     * @param string             $key
      * @param CollectorInterface $collector
      * @return bool
      */
-    public function validate($value, $key, CollectorInterface $collector);
+    public function validate($key, $value, CollectorInterface $collector);
 }

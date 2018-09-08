@@ -6,6 +6,7 @@ use Emonkak\Validation\Collector\CollectorInterface;
 
 class Shape implements TypeInterface
 {
+    use ConstraintTrait;
     use OptionalTrait;
 
     /**
@@ -39,10 +40,10 @@ class Shape implements TypeInterface
     /**
      * {@inheritDoc}
      */
-    public function validate($value, $key, CollectorInterface $collector)
+    public function validate($key, $value, CollectorInterface $collector)
     {
         if (!is_array($value)) {
-            $collector->collect($value, $key, $this);
+            $collector->collectTypeError($key, $value, $this);
             return false;
         }
 
@@ -51,7 +52,7 @@ class Shape implements TypeInterface
         foreach ($this->types as $subKey => $type) {
             $subValue = isset($value[$subKey]) ? $value[$subKey] : null;
 
-            if (!$type->validate($subValue, $key . '.' . $subKey, $collector)) {
+            if (!$type->validate($key . '.' . $subKey, $subValue, $collector)) {
                 $isValid = false;
             }
         }

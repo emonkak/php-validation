@@ -2,13 +2,13 @@
 
 namespace Emonkak\Validation;
 
+use Emonkak\Validation\Constraint\Matches;
 use Emonkak\Validation\Type\Any;
 use Emonkak\Validation\Type\ArrayOf;
 use Emonkak\Validation\Type\ClassOf;
 use Emonkak\Validation\Type\Filter;
 use Emonkak\Validation\Type\OneOf;
 use Emonkak\Validation\Type\OneOfType;
-use Emonkak\Validation\Type\PatternOf;
 use Emonkak\Validation\Type\Primitive;
 use Emonkak\Validation\Type\Shape;
 use Emonkak\Validation\Type\TypeInterface;
@@ -38,7 +38,8 @@ final class Types
      */
     public static function date()
     {
-        return new PatternOf('Date', '/^' . self::DATE_PATTERN . '$/');
+        return (new Primitive('string'))
+           ->withConstraints(new Matches('/^' . self::DATE_PATTERN . '$/'));
     }
 
     /**
@@ -46,7 +47,8 @@ final class Types
      */
     public static function dateTime()
     {
-        return new PatternOf('datetime', '/^' . self::DATE_PATTERN . ' ' . self::TIME_PATTERN . '$/');
+        return (new Primitive('string'))
+           ->withConstraints(new Matches('/^' . self::DATE_PATTERN . ' ' . self::TIME_PATTERN . '$/'));
     }
 
     /**
@@ -54,7 +56,8 @@ final class Types
      */
     public static function time()
     {
-        return new PatternOf('Time', '/^' . self::TIME_PATTERN . '$/');
+        return (new Primitive('string'))
+           ->withConstraints(new Matches('/^' . self::TIME_PATTERN . '$/'));
     }
 
     /**

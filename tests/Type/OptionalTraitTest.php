@@ -14,11 +14,15 @@ class OptionalTraitTest extends \PHPUnit_Framework_TestCase
 {
     public function testIsOptional()
     {
-        $this->assertInstanceOf(Optional::class, (new OptionalTraitStub())->isOptional());
+        $type = new ConcreteOptionalTrait();
+        $optionalType = $type->isOptional();
+
+        $this->assertInstanceOf(Optional::class, $optionalType);
+        $this->assertSame($type, $optionalType->getType());
     }
 }
 
-class OptionalTraitStub implements TypeInterface
+class ConcreteOptionalTrait implements TypeInterface
 {
     use OptionalTrait;
 
@@ -27,7 +31,7 @@ class OptionalTraitStub implements TypeInterface
         return 'string';
     }
 
-    public function validate($value, $key, CollectorInterface $collector)
+    public function validate($key, $value, CollectorInterface $collector)
     {
         return true;
     }

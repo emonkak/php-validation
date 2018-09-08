@@ -33,8 +33,8 @@ class OneOfTypeTest extends \PHPUnit_Framework_TestCase
     public function providerGetDeclaration()
     {
         return [
-            [['integer'], 'integer'],
-            [['integer', 'string'], 'integer|string']
+            [['integer'], '(integer)'],
+            [['integer', 'string'], '(integer|string)']
         ];
     }
 
@@ -52,14 +52,14 @@ class OneOfTypeTest extends \PHPUnit_Framework_TestCase
         $collector = $this->createMock(CollectorInterface::class);
         $collector
             ->expects($this->never())
-            ->method('collect');
+            ->method('collectTypeError');
 
         $unionTypes[0]
             ->expects($this->once())
             ->method('validate')
             ->with(
-                $this->identicalTo($value),
                 $this->identicalTo($key),
+                $this->identicalTo($value),
                 $this->isInstanceOf(CollectorInterface::class)
             )
             ->willReturn(false);
@@ -67,13 +67,13 @@ class OneOfTypeTest extends \PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('validate')
             ->with(
-                $this->identicalTo($value),
                 $this->identicalTo($key),
+                $this->identicalTo($value),
                 $this->isInstanceOf(CollectorInterface::class)
             )
             ->willReturn(true);
 
-        $this->assertTrue($type->validate($value, $key, $collector));
+        $this->assertTrue($type->validate($key, $value, $collector));
     }
 
     public function testValidateReturnsFalse()
@@ -90,10 +90,10 @@ class OneOfTypeTest extends \PHPUnit_Framework_TestCase
         $collector = $this->createMock(CollectorInterface::class);
         $collector
             ->expects($this->once())
-            ->method('collect')
+            ->method('collectTypeError')
             ->with(
-                $this->identicalTo($value),
                 $this->identicalTo($key),
+                $this->identicalTo($value),
                 $this->identicalTo($type)
             );
 
@@ -101,8 +101,8 @@ class OneOfTypeTest extends \PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('validate')
             ->with(
-                $this->identicalTo($value),
                 $this->identicalTo($key),
+                $this->identicalTo($value),
                 $this->isInstanceOf(CollectorInterface::class)
             )
             ->willReturn(false);
@@ -110,12 +110,12 @@ class OneOfTypeTest extends \PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('validate')
             ->with(
-                $this->identicalTo($value),
                 $this->identicalTo($key),
+                $this->identicalTo($value),
                 $this->isInstanceOf(CollectorInterface::class)
             )
             ->willReturn(false);
 
-        $this->assertFalse($type->validate($value, $key, $collector));
+        $this->assertFalse($type->validate($key, $value, $collector));
     }
 }

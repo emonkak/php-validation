@@ -5,7 +5,7 @@ namespace Emonkak\Validation\Type;
 trait OptionalTrait
 {
     /**
-     * @return TypeInterface
+     * @return Optional
      */
     public function isOptional()
     {

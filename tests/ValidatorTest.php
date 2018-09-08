@@ -3,8 +3,8 @@
 namespace Emonkak\Validation\Tests;
 
 use Emonkak\Validation\Collector\CollectorInterface;
-use Emonkak\Validation\Error;
 use Emonkak\Validation\ErrorBagInterface;
+use Emonkak\Validation\TypeError;
 use Emonkak\Validation\Type\TypeInterface;
 use Emonkak\Validation\Validator;
 
@@ -25,40 +25,32 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('validate')
             ->with(
-                $this->identicalTo(123),
                 $this->identicalTo('foo'),
+                $this->identicalTo(123),
                 $this->isInstanceOf(CollectorInterface::class)
             )
             ->willReturn(true);
         $types['bar']
             ->expects($this->once())
-            ->method('getDeclaration')
-            ->willReturn('string');
-        $types['bar']
-            ->expects($this->once())
             ->method('validate')
             ->with(
-                $this->identicalTo(456),
                 $this->identicalTo('bar'),
+                $this->identicalTo(456),
                 $this->isInstanceOf(CollectorInterface::class)
             )
-            ->will($this->returnCallback(function($value, $key, $collector) use ($types) {
-                $collector->collect($value, $key, $types['bar']);
+            ->will($this->returnCallback(function($key, $value, $collector) use ($types) {
+                $collector->collectTypeError($key, $value, $types['bar']);
             }));
         $types['baz']
             ->expects($this->once())
-            ->method('getDeclaration')
-            ->willReturn('string');
-        $types['baz']
-            ->expects($this->once())
             ->method('validate')
             ->with(
-                $this->identicalTo(null),
                 $this->identicalTo('baz'),
+                $this->identicalTo(null),
                 $this->isInstanceOf(CollectorInterface::class)
             )
-            ->will($this->returnCallback(function($value, $key, $collector) use ($types) {
-                $collector->collect($value, $key, $types['baz']);
+            ->will($this->returnCallback(function($key, $value, $collector) use ($types) {
+                $collector->collectTypeError($key, $value, $types['baz']);
             }));
 
         $data = [
@@ -72,8 +64,8 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf(ErrorBagInterface::class, $errors);
         $this->assertEquals([
-            'bar' => [new Error('bar', 'string', 'integer')],
-            'baz' => [new Error('baz', 'string', 'NULL')]
+            'bar' => [new TypeError('bar', 456, $types['bar'])],
+            'baz' => [new TypeError('baz', null, $types['baz'])]
         ], $errors->getErrors());
     }
 }

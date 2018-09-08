@@ -11,80 +11,80 @@ use Emonkak\Validation\Type\TypeInterface;
  */
 class OptionalTest extends \PHPUnit_Framework_TestCase
 {
+    public function testGetType()
+    {
+        $type = $this->createMock(TypeInterface::class);
+        $optionalType = new Optional($type);
+
+        $this->assertSame($type, $optionalType->getType());
+    }
+
     /**
      * @dataProvider providerGetDeclaration
      */
-    public function testGetDeclaration($itemDeclaration, $expectedDeclaration)
+    public function testGetDeclaration($declaration, $expectedDeclaration)
     {
-        $itemType = $this->createMock(TypeInterface::class);
-        $itemType
+        $type = $this->createMock(TypeInterface::class);
+        $type
             ->expects($this->once())
             ->method('getDeclaration')
-            ->willReturn($itemDeclaration);
+            ->willReturn($declaration);
 
-        $this->assertSame($expectedDeclaration, (new Optional($itemType))->getDeclaration());
+        $this->assertSame($expectedDeclaration, (new Optional($type))->getDeclaration());
     }
 
     public function providerGetDeclaration()
     {
         return [
             ['integer', '?integer'],
-            ['integer|string', '?(integer|string)']
+            ['(integer|string)', '?(integer|string)']
         ];
     }
 
     public function testValidateReturnsTrue()
     {
-        $value = 123;
         $key = 'foo';
+        $value = 123;
 
         $collector = $this->createMock(CollectorInterface::class);
-        $itemType = $this->createMock(TypeInterface::class);
-        $type = new Optional($itemType);
 
-        $collector
-            ->expects($this->never())
-            ->method('collect');
-
-        $itemType
+        $type = $this->createMock(TypeInterface::class);
+        $type
             ->expects($this->once())
             ->method('validate')
             ->with(
-                $this->identicalTo($value),
                 $this->identicalTo($key),
+                $this->identicalTo($value),
                 $this->identicalTo($collector)
             )
             ->willReturn(true);
 
+        $optionalType = new Optional($type);
 
-        $this->assertTrue($type->validate($value, $key, $collector));
-        $this->assertTrue($type->validate(null, $key, $collector));
+        $this->assertTrue($optionalType->validate($key, $value, $collector));
+        $this->assertTrue($optionalType->validate($key, null, $collector));
     }
 
     public function testValidateReturnsFalse()
     {
-        $value = 123;
         $key = 'foo';
+        $value = 123;
 
         $collector = $this->createMock(CollectorInterface::class);
-        $itemType = $this->createMock(TypeInterface::class);
-        $type = new Optional($itemType);
 
-        $collector
-            ->expects($this->never())
-            ->method('collect');
-
-        $itemType
+        $type = $this->createMock(TypeInterface::class);
+        $type
             ->expects($this->once())
             ->method('validate')
             ->with(
-                $this->identicalTo($value),
                 $this->identicalTo($key),
+                $this->identicalTo($value),
                 $this->identicalTo($collector)
             )
             ->willReturn(false);
 
+        $optionalType = new Optional($type);
 
-        $this->assertFalse($type->validate($value, $key, $collector));
+        $this->assertFalse($optionalType->validate($key, $value, $collector));
     }
 }

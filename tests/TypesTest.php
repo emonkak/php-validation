@@ -15,8 +15,9 @@ class TypesTest extends \PHPUnit_Framework_TestCase
      */
     public function testAny($expectedResult, $value)
     {
+        $key = 'key';
         $type = Types::any();
-        $this->assertSame($expectedResult, $type->validate($value, 'key', $this->createMock(CollectorInterface::class)));
+        $this->assertSame($expectedResult, $type->validate($key, $value, $this->createMock(CollectorInterface::class)));
         $this->assertSame('any', $type->getDeclaration());
     }
 
@@ -38,9 +39,10 @@ class TypesTest extends \PHPUnit_Framework_TestCase
      */
     public function testDate($expectedResult, $value)
     {
+        $key = 'key';
         $type = Types::date();
-        $this->assertSame($expectedResult, $type->validate($value, 'key', $this->createMock(CollectorInterface::class)));
-        $this->assertSame('Date', $type->getDeclaration());
+        $this->assertSame($expectedResult, $type->validate($key, $value, $this->createMock(CollectorInterface::class)));
+        $this->assertSame('string', $type->getDeclaration());
     }
 
     public function providerDate()
@@ -67,9 +69,10 @@ class TypesTest extends \PHPUnit_Framework_TestCase
      */
     public function testDateTime($expectedResult, $value)
     {
+        $key = 'key';
         $type = Types::dateTime();
-        $this->assertSame($expectedResult, $type->validate($value, 'key', $this->createMock(CollectorInterface::class)));
-        $this->assertSame('datetime', $type->getDeclaration());
+        $this->assertSame($expectedResult, $type->validate($key, $value, $this->createMock(CollectorInterface::class)));
+        $this->assertSame('string', $type->getDeclaration());
     }
 
     public function providerDateTime()
@@ -96,9 +99,10 @@ class TypesTest extends \PHPUnit_Framework_TestCase
      */
     public function testTime($expectedResult, $value)
     {
+        $key = 'key';
         $type = Types::time();
-        $this->assertSame($expectedResult, $type->validate($value, 'key', $this->createMock(CollectorInterface::class)));
-        $this->assertSame('Time', $type->getDeclaration());
+        $this->assertSame($expectedResult, $type->validate($key, $value, $this->createMock(CollectorInterface::class)));
+        $this->assertSame('string', $type->getDeclaration());
     }
 
     public function providerTime()
@@ -118,8 +122,9 @@ class TypesTest extends \PHPUnit_Framework_TestCase
      */
     public function testString($expectedResult, $value)
     {
+        $key = 'key';
         $type = Types::string();
-        $this->assertSame($expectedResult, $type->validate($value, 'key', $this->createMock(CollectorInterface::class)));
+        $this->assertSame($expectedResult, $type->validate($key, $value, $this->createMock(CollectorInterface::class)));
         $this->assertSame('string', $type->getDeclaration());
     }
 
@@ -141,8 +146,9 @@ class TypesTest extends \PHPUnit_Framework_TestCase
      */
     public function testInt($expectedResult, $value)
     {
+        $key = 'key';
         $type = Types::int();
-        $this->assertSame($expectedResult, $type->validate($value, 'key', $this->createMock(CollectorInterface::class)));
+        $this->assertSame($expectedResult, $type->validate($key, $value, $this->createMock(CollectorInterface::class)));
         $this->assertSame('integer', $type->getDeclaration());
     }
 
@@ -170,8 +176,9 @@ class TypesTest extends \PHPUnit_Framework_TestCase
      */
     public function testIntValue($expectedResult, $value)
     {
+        $key = 'key';
         $type = Types::intValue();
-        $this->assertSame($expectedResult, $type->validate($value, 'key', $this->createMock(CollectorInterface::class)));
+        $this->assertSame($expectedResult, $type->validate($key, $value, $this->createMock(CollectorInterface::class)));
         $this->assertSame('integer', $type->getDeclaration());
     }
 
@@ -195,8 +202,9 @@ class TypesTest extends \PHPUnit_Framework_TestCase
      */
     public function testFloat($expectedResult, $value)
     {
+        $key = 'key';
         $type = Types::float();
-        $this->assertSame($expectedResult, $type->validate($value, 'key', $this->createMock(CollectorInterface::class)));
+        $this->assertSame($expectedResult, $type->validate($key, $value, $this->createMock(CollectorInterface::class)));
         $this->assertSame('double', $type->getDeclaration());
     }
 
@@ -224,8 +232,9 @@ class TypesTest extends \PHPUnit_Framework_TestCase
      */
     public function testFloatValue($expectedResult, $value)
     {
+        $key = 'key';
         $type = Types::floatValue();
-        $this->assertSame($expectedResult, $type->validate($value, 'key', $this->createMock(CollectorInterface::class)));
+        $this->assertSame($expectedResult, $type->validate($key, $value, $this->createMock(CollectorInterface::class)));
         $this->assertSame('double', $type->getDeclaration());
     }
 
@@ -253,8 +262,9 @@ class TypesTest extends \PHPUnit_Framework_TestCase
      */
     public function testBool($expectedResult, $value)
     {
+        $key = 'key';
         $type = Types::bool();
-        $this->assertSame($expectedResult, $type->validate($value, 'key', $this->createMock(CollectorInterface::class)));
+        $this->assertSame($expectedResult, $type->validate($key, $value, $this->createMock(CollectorInterface::class)));
         $this->assertSame('boolean', $type->getDeclaration());
     }
 
@@ -282,8 +292,9 @@ class TypesTest extends \PHPUnit_Framework_TestCase
      */
     public function testBoolValue($expectedResult, $value)
     {
+        $key = 'key';
         $type = Types::boolValue();
-        $this->assertSame($expectedResult, $type->validate($value, 'key', $this->createMock(CollectorInterface::class)));
+        $this->assertSame($expectedResult, $type->validate($key, $value, $this->createMock(CollectorInterface::class)));
         $this->assertSame('boolean', $type->getDeclaration());
     }
 
@@ -308,57 +319,62 @@ class TypesTest extends \PHPUnit_Framework_TestCase
 
     public function testArrayOf()
     {
+        $key = 'key';
         $type = Types::arrayOf(Types::intValue());
 
-        $this->assertTrue($type->validate([], 'key', $this->createMock(CollectorInterface::class)));
-        $this->assertTrue($type->validate([1, 2, 3], 'key', $this->createMock(CollectorInterface::class)));
-        $this->assertFalse($type->validate([1, '2', 3], 'key', $this->createMock(CollectorInterface::class)));
+        $this->assertTrue($type->validate($key, [], $this->createMock(CollectorInterface::class)));
+        $this->assertTrue($type->validate($key, [1, 2, 3], $this->createMock(CollectorInterface::class)));
+        $this->assertFalse($type->validate($key, [1, '2', 3], $this->createMock(CollectorInterface::class)));
 
         $this->assertSame('integer[]', $type->getDeclaration());
     }
 
     public function testClassOf()
     {
+        $key = 'key';
         $type = Types::classOf(\DateTime::class);
 
-        $this->assertTrue($type->validate(new \DateTime(), 'key', $this->createMock(CollectorInterface::class)));
-        $this->assertFalse($type->validate(new \DateTimeImmutable(), 'key', $this->createMock(CollectorInterface::class)));
+        $this->assertTrue($type->validate($key, new \DateTime(), $this->createMock(CollectorInterface::class)));
+        $this->assertFalse($type->validate($key, new \DateTimeImmutable(), $this->createMock(CollectorInterface::class)));
 
         $this->assertSame(\DateTime::class, $type->getDeclaration());
     }
 
     public function testOneOf()
     {
+        $key = 'key';
         $type = Types::oneOf(['foo', 'bar']);
 
-        $this->assertTrue($type->validate('foo', 'key', $this->createMock(CollectorInterface::class)));
-        $this->assertTrue($type->validate('bar', 'key', $this->createMock(CollectorInterface::class)));
-        $this->assertFalse($type->validate('baz', 'key', $this->createMock(CollectorInterface::class)));
+        $this->assertTrue($type->validate($key, 'foo', $this->createMock(CollectorInterface::class)));
+        $this->assertTrue($type->validate($key, 'bar', $this->createMock(CollectorInterface::class)));
+        $this->assertFalse($type->validate($key, 'baz', $this->createMock(CollectorInterface::class)));
 
-        $this->assertSame('"foo"|"bar"', $type->getDeclaration());
+        $this->assertSame('("foo"|"bar")', $type->getDeclaration());
     }
 
     public function testOneOfType()
     {
+        $key = 'key';
         $type = Types::oneOfType([Types::intValue(), Types::string()]);
 
-        $this->assertTrue($type->validate(0, 'key', $this->createMock(CollectorInterface::class)));
-        $this->assertTrue($type->validate('foo', 'key', $this->createMock(CollectorInterface::class)));
-        $this->assertFalse($type->validate(true, 'key', $this->createMock(CollectorInterface::class)));
+        $this->assertTrue($type->validate($key, 0, $this->createMock(CollectorInterface::class)));
+        $this->assertTrue($type->validate($key, 'foo', $this->createMock(CollectorInterface::class)));
+        $this->assertFalse($type->validate($key, true, $this->createMock(CollectorInterface::class)));
 
-        $this->assertSame('integer|string', $type->getDeclaration());
+        $this->assertSame('(integer|string)', $type->getDeclaration());
     }
 
     public function testShape()
     {
+        $key = 'key';
         $type = Types::shape('Foo', [
             'foo' => Types::intValue(),
             'bar' => Types::boolValue(),
         ]);
 
-        $this->assertTrue($type->validate(['foo' => 1, 'bar' => true], 'key', $this->createMock(CollectorInterface::class)));
-        $this->assertFalse($type->validate(['foo' => '1', 'bar' => true], 'key', $this->createMock(CollectorInterface::class)));
-        $this->assertFalse($type->validate(['foo' => 1, 'bar' => 'true'], 'key', $this->createMock(CollectorInterface::class)));
+        $this->assertTrue($type->validate($key, ['foo' => 1, 'bar' => true], $this->createMock(CollectorInterface::class)));
+        $this->assertFalse($type->validate($key, ['foo' => '1', 'bar' => true], $this->createMock(CollectorInterface::class)));
+        $this->assertFalse($type->validate($key, ['foo' => 1, 'bar' => 'true'], $this->createMock(CollectorInterface::class)));
 
         $this->assertSame('Foo', $type->getDeclaration());
     }

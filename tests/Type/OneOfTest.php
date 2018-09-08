@@ -21,8 +21,8 @@ class OneOfTest extends \PHPUnit_Framework_TestCase
     public function providerGetDeclaration()
     {
         return [
-            [['foo'], '"foo"'],
-            [['foo', 'bar'], '"foo"|"bar"']
+            [['foo'], '("foo")'],
+            [['foo', 'bar'], '("foo"|"bar")']
         ];
     }
 
@@ -37,10 +37,10 @@ class OneOfTest extends \PHPUnit_Framework_TestCase
         $collector = $this->createMock(CollectorInterface::class);
         $collector
             ->expects($this->never())
-            ->method('collect');
+            ->method('collectTypeError');
 
 
-        $this->assertTrue($type->validate($value, $key, $collector));
+        $this->assertTrue($type->validate($key, $value, $collector));
     }
 
     public function providerValidateReturnsTrue()
@@ -62,14 +62,14 @@ class OneOfTest extends \PHPUnit_Framework_TestCase
         $collector = $this->createMock(CollectorInterface::class);
         $collector
             ->expects($this->once())
-            ->method('collect')
+            ->method('collectTypeError')
             ->with(
-                $this->identicalTo($value),
                 $this->identicalTo($key),
+                $this->identicalTo($value),
                 $this->identicalTo($type)
             );
 
-        $this->assertFalse($type->validate($value, $key, $collector));
+        $this->assertFalse($type->validate($key, $value, $collector));
     }
 
     public function providerValidateReturnsFalse()

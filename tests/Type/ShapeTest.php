@@ -18,11 +18,11 @@ class ShapeTest extends \PHPUnit_Framework_TestCase
 
     public function testValidateReturnsTrue()
     {
+        $key = 'foo';
         $value = [
             'bar' => 123,
             'baz' => 456,
         ];
-        $key = 'foo';
         $shapeTypes = [
             'bar' => $this->createMock(TypeInterface::class),
             'baz' => $this->createMock(TypeInterface::class),
@@ -33,14 +33,14 @@ class ShapeTest extends \PHPUnit_Framework_TestCase
         $collector = $this->createMock(CollectorInterface::class);
         $collector
             ->expects($this->never())
-            ->method('collect');
+            ->method('collectTypeError');
 
         $shapeTypes['bar']
             ->expects($this->once())
             ->method('validate')
             ->with(
-                $this->identicalTo($value['bar']),
                 $this->identicalTo($key . '.bar'),
+                $this->identicalTo($value['bar']),
                 $this->identicalTo($collector)
             )
             ->willReturn(true);
@@ -48,22 +48,22 @@ class ShapeTest extends \PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('validate')
             ->with(
-                $this->identicalTo($value['baz']),
                 $this->identicalTo($key . '.baz'),
+                $this->identicalTo($value['baz']),
                 $this->identicalTo($collector)
             )
             ->willReturn(true);
 
-        $this->assertTrue($type->validate($value, $key, $collector));
+        $this->assertTrue($type->validate($key, $value, $collector));
     }
 
     public function testValidateReturnsFalse()
     {
+        $key = 'foo';
         $value = [
             'bar' => 123,
             'baz' => 456,
         ];
-        $key = 'foo';
         $shapeTypes = [
             'bar' => $this->createMock(TypeInterface::class),
             'baz' => $this->createMock(TypeInterface::class),
@@ -74,14 +74,14 @@ class ShapeTest extends \PHPUnit_Framework_TestCase
         $collector = $this->createMock(CollectorInterface::class);
         $collector
             ->expects($this->never())
-            ->method('collect');
+            ->method('collectTypeError');
 
         $shapeTypes['bar']
             ->expects($this->once())
             ->method('validate')
             ->with(
-                $this->identicalTo($value['bar']),
                 $this->identicalTo($key . '.bar'),
+                $this->identicalTo($value['bar']),
                 $this->identicalTo($collector)
             )
             ->willReturn(false);
@@ -89,19 +89,19 @@ class ShapeTest extends \PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('validate')
             ->with(
-                $this->identicalTo($value['baz']),
                 $this->identicalTo($key . '.baz'),
+                $this->identicalTo($value['baz']),
                 $this->identicalTo($collector)
             )
             ->willReturn(false);
 
-        $this->assertFalse($type->validate($value, $key, $collector));
+        $this->assertFalse($type->validate($key, $value, $collector));
     }
 
     public function testValidateWilNull()
     {
-        $value = null;
         $key = 'foo';
+        $value = null;
         $shapeTypes = [
             'bar' => $this->createMock(TypeInterface::class),
             'baz' => $this->createMock(TypeInterface::class),
@@ -112,10 +112,10 @@ class ShapeTest extends \PHPUnit_Framework_TestCase
         $collector = $this->createMock(CollectorInterface::class);
         $collector
             ->expects($this->once())
-            ->method('collect')
+            ->method('collectTypeError')
             ->with(
-                $this->identicalTo($value),
                 $this->identicalTo($key),
+                $this->identicalTo($value),
                 $this->identicalTo($type)
             );
 
@@ -126,6 +126,6 @@ class ShapeTest extends \PHPUnit_Framework_TestCase
             ->expects($this->never())
             ->method('validate');
 
-        $this->assertFalse($type->validate($value, $key, $collector));
+        $this->assertFalse($type->validate($key, $value, $collector));
     }
 }

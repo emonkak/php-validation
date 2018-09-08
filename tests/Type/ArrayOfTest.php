@@ -29,18 +29,18 @@ class ArrayOfTest extends \PHPUnit_Framework_TestCase
     {
         return [
             ['integer', 'integer[]'],
-            ['integer|string', '(integer|string)[]']
+            ['(integer|string)', '(integer|string)[]']
         ];
     }
 
     public function testValidateReturnsTrue()
     {
+        $key = 'foo';
         $value = [
             123,
             456,
             789
         ];
-        $key = 'foo';
 
         $collector = $this->createMock(CollectorInterface::class);
         $itemType = $this->createMock(TypeInterface::class);
@@ -48,14 +48,14 @@ class ArrayOfTest extends \PHPUnit_Framework_TestCase
 
         $collector
             ->expects($this->never())
-            ->method('collect');
+            ->method('collectTypeError');
 
         $itemType
             ->expects($this->at(0))
             ->method('validate')
             ->with(
-                $this->identicalTo($value[0]),
                 $this->identicalTo($key . '[0]'),
+                $this->identicalTo($value[0]),
                 $this->identicalTo($collector)
             )
             ->willReturn(true);
@@ -63,8 +63,8 @@ class ArrayOfTest extends \PHPUnit_Framework_TestCase
             ->expects($this->at(1))
             ->method('validate')
             ->with(
-                $this->identicalTo($value[1]),
                 $this->identicalTo($key . '[1]'),
+                $this->identicalTo($value[1]),
                 $this->identicalTo($collector)
             )
             ->willReturn(true);
@@ -72,23 +72,23 @@ class ArrayOfTest extends \PHPUnit_Framework_TestCase
             ->expects($this->at(2))
             ->method('validate')
             ->with(
-                $this->identicalTo($value[2]),
                 $this->identicalTo($key . '[2]'),
+                $this->identicalTo($value[2]),
                 $this->identicalTo($collector)
             )
             ->willReturn(true);
 
-        $this->assertTrue($type->validate($value, $key, $collector));
+        $this->assertTrue($type->validate($key, $value, $collector));
     }
 
     public function testValidateReturnsFalse()
     {
+        $key = 'foo';
         $value = [
             123,
             true,
             false
         ];
-        $key = 'foo';
 
         $collector = $this->createMock(CollectorInterface::class);
         $itemType = $this->createMock(TypeInterface::class);
@@ -96,14 +96,14 @@ class ArrayOfTest extends \PHPUnit_Framework_TestCase
 
         $collector
             ->expects($this->never())
-            ->method('collect');
+            ->method('collectTypeError');
 
         $itemType
             ->expects($this->at(0))
             ->method('validate')
             ->with(
-                $this->identicalTo($value[0]),
                 $this->identicalTo($key . '[0]'),
+                $this->identicalTo($value[0]),
                 $this->identicalTo($collector)
             )
             ->willReturn(true);
@@ -111,8 +111,8 @@ class ArrayOfTest extends \PHPUnit_Framework_TestCase
             ->expects($this->at(1))
             ->method('validate')
             ->with(
-                $this->identicalTo($value[1]),
                 $this->identicalTo($key . '[1]'),
+                $this->identicalTo($value[1]),
                 $this->identicalTo($collector)
             )
             ->willReturn(false);
@@ -120,19 +120,19 @@ class ArrayOfTest extends \PHPUnit_Framework_TestCase
             ->expects($this->at(2))
             ->method('validate')
             ->with(
-                $this->identicalTo($value[2]),
                 $this->identicalTo($key . '[2]'),
+                $this->identicalTo($value[2]),
                 $this->identicalTo($collector)
             )
             ->willReturn(false);
 
-        $this->assertFalse($type->validate($value, $key, $collector));
+        $this->assertFalse($type->validate($key, $value, $collector));
     }
 
     public function testValidateWithNull()
     {
-        $value = null;
         $key = 'foo';
+        $value = null;
 
         $collector = $this->createMock(CollectorInterface::class);
         $itemType = $this->createMock(TypeInterface::class);
@@ -140,10 +140,10 @@ class ArrayOfTest extends \PHPUnit_Framework_TestCase
 
         $collector
             ->expects($this->once())
-            ->method('collect')
+            ->method('collectTypeError')
             ->with(
-                $this->identicalTo($value),
                 $this->identicalTo($key),
+                $this->identicalTo($value),
                 $this->identicalTo($type)
             );
 
@@ -151,6 +151,6 @@ class ArrayOfTest extends \PHPUnit_Framework_TestCase
             ->expects($this->never())
             ->method('validate');
 
-        $this->assertFalse($type->validate($value, $key, $collector));
+        $this->assertFalse($type->validate($key, $value, $collector));
     }
 }
