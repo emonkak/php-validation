@@ -2,11 +2,13 @@
 
 namespace Emonkak\Validation;
 
+use Emonkak\Validation\Constraint\Between;
+use Emonkak\Validation\Constraint\Filter;
+use Emonkak\Validation\Constraint\Length;
 use Emonkak\Validation\Constraint\Matches;
 use Emonkak\Validation\Type\Any;
 use Emonkak\Validation\Type\ArrayOf;
 use Emonkak\Validation\Type\ClassOf;
-use Emonkak\Validation\Type\Filter;
 use Emonkak\Validation\Type\OneOf;
 use Emonkak\Validation\Type\OneOfType;
 use Emonkak\Validation\Type\Primitive;
@@ -61,43 +63,51 @@ final class Types
     }
 
     /**
+     * @param int $minLength
+     * @param int $maxLength
      * @return TypeInterface
      */
-    public static function string()
+    public static function string($minLength = 0, $maxLength = INF)
     {
-        return new Primitive('string');
+        $type = new Primitive('string');
+
+        if ($minLength !== 0 || $maxLength !== INF) {
+            $type = $type->withConstraints(new Length($minLength, $maxLength));
+        }
+
+        return $type;
     }
 
     /**
+     * @param int $min
+     * @param int $max
      * @return TypeInterface
      */
-    public static function int()
+    public static function int($min = -INF, $max = INF)
     {
-        return new Filter('integer', FILTER_VALIDATE_INT);
+        $type = new Primitive('integer');
+
+        if ($min !== -INF || $max !== INF) {
+            $type = $type->withConstraints(new Between($min, $max));
+        }
+
+        return $type;
     }
 
     /**
+     * @param int $min
+     * @param int $max
      * @return TypeInterface
      */
-    public static function intValue()
+    public static function float($min = -INF, $max = INF)
     {
-        return new Primitive('integer');
-    }
+        $type = new Primitive('double');
 
-    /**
-     * @return TypeInterface
-     */
-    public static function float()
-    {
-        return new Filter('double', FILTER_VALIDATE_FLOAT);
-    }
+        if ($min !== -INF || $max !== INF) {
+            $type = $type->withConstraints(new Between($min, $max));
+        }
 
-    /**
-     * @return TypeInterface
-     */
-    public static function floatValue()
-    {
-        return new Primitive('double');
+        return $type;
     }
 
     /**
@@ -105,15 +115,34 @@ final class Types
      */
     public static function bool()
     {
-        return new Filter('boolean', FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+        return new Primitive('boolean');
     }
 
     /**
      * @return TypeInterface
      */
-    public static function boolValue()
+    public static function digit()
     {
-        return new Primitive('boolean');
+        return (new Any())
+            ->withConstraints(new Filter('int'));
+    }
+
+    /**
+     * @return TypeInterface
+     */
+    public static function decimal()
+    {
+        return (new Any())
+            ->withConstraints(new Filter('float'));
+    }
+
+    /**
+     * @return TypeInterface
+     */
+    public static function accepted()
+    {
+        return (new Any())
+            ->withConstraints(new Filter('boolean', FILTER_NULL_ON_FAILURE));
     }
 
     /**

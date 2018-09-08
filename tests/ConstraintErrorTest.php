@@ -31,13 +31,13 @@ class ConstraintErrorTest extends \PHPUnit_Framework_TestCase
         $constraint
             ->expects($this->once())
             ->method('getDeclaration')
-            ->willReturn('constraint');
+            ->willReturn('my_constraint');
 
         $error = new ConstraintError($key, $value, $constraint);
 
         $errorString = (string) $error;
 
         $this->assertContains("`$key`", $errorString);
-        $this->assertStringEndsWith('constraint', $errorString);
+        $this->assertContains('my_constraint', $errorString);
     }
 }

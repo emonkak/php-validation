@@ -3,16 +3,24 @@
 namespace Emonkak\Validation\Tests\Constraint;
 
 use Emonkak\Validation\Collector\CollectorInterface;
-use Emonkak\Validation\Constraint\MaxLength;
+use Emonkak\Validation\Constraint\Length;
 
 /**
- * @covers Emonkak\Validation\Constraint\MaxLength
+ * @covers Emonkak\Validation\Constraint\Length
  */
-class MaxLengthTest extends \PHPUnit_Framework_TestCase
+class LengthTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testConstructorThrowsInvalidArgumentException()
+    {
+        new Length(3, 1);
+    }
+
     public function testGetDeclaration()
     {
-        $this->assertNotEmpty((new MaxLength(2))->getDeclaration());
+        $this->assertNotEmpty((new Length(1, 3))->getDeclaration());
     }
 
     /**
@@ -20,17 +28,18 @@ class MaxLengthTest extends \PHPUnit_Framework_TestCase
      */
     public function testIsSatisfiedBy($value, $expectedResult)
     {
-        $constraint = new MaxLength(2);
+        $constraint = new Length(1, 3);
         $this->assertSame($expectedResult, $constraint->isSatisfiedBy($value));
     }
 
     public function providerIsSatisfiedBy()
     {
         return [
-            ['', true],
+            ['', false],
             ['f', true],
             ['fo', true],
-            ['foo', false]
+            ['foo', true],
+            ['fooo', false]
         ];
     }
 }
