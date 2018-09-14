@@ -15,7 +15,7 @@ class OneOfTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetDeclaration(array $expectedValues, $expectedDeclaration)
     {
-        $oneOf = new OneOf($expectedValues);
+        $oneOf = new OneOf($expectedValues, true);
 
         $this->assertSame($expectedDeclaration, $oneOf->getDeclaration());
         $this->assertSame($expectedValues, $oneOf->getExpectedValues());
@@ -32,16 +32,15 @@ class OneOfTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider providerValidateReturnsTrue
      */
-    public function testValidateReturnsTrue($value, array $expectedValues)
+    public function testValidateReturnsTrue($value, array $expectedValues, $strict)
     {
         $key = 'foo';
-        $type = new OneOf($expectedValues);
+        $type = new OneOf($expectedValues, $strict);
 
         $collector = $this->createMock(CollectorInterface::class);
         $collector
             ->expects($this->never())
             ->method('collectTypeError');
-
 
         $this->assertTrue($type->validate($key, $value, $collector));
     }
@@ -49,18 +48,20 @@ class OneOfTest extends \PHPUnit_Framework_TestCase
     public function providerValidateReturnsTrue()
     {
         return [
-            [123, [123, 456]],
-            [456, [123, 456]]
+            [123, [123, 456], true],
+            [456, [123, 456], true],
+            ['123', [123, 456], false],
+            ['456', [123, 456], false]
         ];
     }
 
     /**
      * @dataProvider providerValidateReturnsFalse
      */
-    public function testValidateReturnsFalse($value, array $expectedValues)
+    public function testValidateReturnsFalse($value, array $expectedValues, $strict)
     {
         $key = 'foo';
-        $type = new OneOf($expectedValues);
+        $type = new OneOf($expectedValues, $strict);
 
         $collector = $this->createMock(CollectorInterface::class);
         $collector
@@ -78,9 +79,10 @@ class OneOfTest extends \PHPUnit_Framework_TestCase
     public function providerValidateReturnsFalse()
     {
         return [
-            [123, []],
-            ['foo', [123, 456]],
-            [null, [123, 456]]
+            [123, [], true],
+            ['123', [123], true],
+            ['foo', [123, 456], true],
+            [null, [123, 456], true]
         ];
     }
 }

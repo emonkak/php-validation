@@ -83,7 +83,7 @@ final class Types
      */
     public static function _empty()
     {
-        return new OneOf([null, '']);
+        return new OneOf([null, ''], true);
     }
 
     /**
@@ -172,11 +172,12 @@ final class Types
 
     /**
      * @param mixed[] $expectedValues
+     * @param bool    $strict
      * @return TypeInterface
      */
-    public static function oneOf(array $expectedValues)
+    public static function oneOf(array $expectedValues, $strict = false)
     {
-        return new OneOf($expectedValues);
+        return new OneOf($expectedValues, $strict);
     }
 
     /**

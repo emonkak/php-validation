@@ -14,12 +14,19 @@ class OneOf implements TypeInterface
     private $expectedValues;
 
     /**
+     * @var bool
+     */
+    private $strict;
+
+    /**
      * @param mixed[] $expectedValues
+     * @param bool    $strict
      * @param string  $message
      */
-    public function __construct(array $expectedValues)
+    public function __construct(array $expectedValues, $strict)
     {
         $this->expectedValues = $expectedValues;
+        $this->strict = $strict;
     }
 
     /**
@@ -43,7 +50,7 @@ class OneOf implements TypeInterface
      */
     public function validate($key, $value, CollectorInterface $collector)
     {
-        if (!in_array($value, $this->expectedValues, true)) {
+        if (!in_array($value, $this->expectedValues, $this->strict)) {
             $collector->collectTypeError($key, $value, $this);
             return false;
         }
