@@ -5,6 +5,7 @@ namespace Emonkak\Validation\Tests\Type;
 use Emonkak\Validation\Collector\CollectorInterface;
 use Emonkak\Validation\Constraint\ConstraintInterface;
 use Emonkak\Validation\Type\Constrained;
+use Emonkak\Validation\Type\OneOfType;
 use Emonkak\Validation\Type\Optional;
 use Emonkak\Validation\Type\TypeInterface;
 use Emonkak\Validation\Type\TypeTrait;
@@ -33,6 +34,16 @@ class TypeTraitTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(Constrained::class, $constrainedType);
         $this->assertSame($type, $constrainedType->getType());
         $this->assertSame([$constraint], $constrainedType->getConstraints());
+    }
+
+    public function testUnion()
+    {
+        $type = new ConcreteTypeTrait();
+        $altType = $this->createMock(TypeInterface::class);
+        $unionType = $type->union($altType);
+
+        $this->assertInstanceOf(oneOfType::class, $unionType);
+        $this->assertSame([$type, $altType], $unionType->getTypes());
     }
 }
 

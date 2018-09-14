@@ -20,6 +20,15 @@ class ArrayOf implements TypeInterface
     {
         $this->type = $type;
     }
+
+    /**
+     * @return TypeInterface
+     */
+    public function getItemType()
+    {
+        return $this->type;
+    }
+
     /**
      * {@inheritDoc}
      */

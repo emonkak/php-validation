@@ -23,6 +23,14 @@ class OneOf implements TypeInterface
     }
 
     /**
+     * @return mixed[]
+     */
+    public function getExpectedValues()
+    {
+        return $this->expectedValues;
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function getDeclaration()
@@ -35,7 +43,7 @@ class OneOf implements TypeInterface
      */
     public function validate($key, $value, CollectorInterface $collector)
     {
-        if (!in_array($value, $this->expectedValues)) {
+        if (!in_array($value, $this->expectedValues, true)) {
             $collector->collectTypeError($key, $value, $this);
             return false;
         }

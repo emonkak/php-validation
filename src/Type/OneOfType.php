@@ -18,6 +18,14 @@ class OneOfType implements TypeInterface
     }
 
     /**
+     * @return TypeInterface[]
+     */
+    public function getTypes()
+    {
+        return $this->types;
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function getDeclaration()
@@ -51,5 +59,13 @@ class OneOfType implements TypeInterface
         }
 
         return $isValid;
+    }
+
+    /**
+     * @return TypeInterface
+     */
+    public function union(TypeInterface ...$types)
+    {
+        return new OneOfType(array_merge($this->types, $types));
     }
 }

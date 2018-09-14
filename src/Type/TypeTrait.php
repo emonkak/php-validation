@@ -22,4 +22,12 @@ trait TypeTrait
     {
         return new Constrained($this, $constraints);
     }
+
+    /**
+     * @return TypeInterface
+     */
+    public function union(TypeInterface ...$types)
+    {
+        return new OneOfType(array_merge([$this], $types));
+    }
 }

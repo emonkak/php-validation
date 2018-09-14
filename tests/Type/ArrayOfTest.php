@@ -22,7 +22,10 @@ class ArrayOfTest extends \PHPUnit_Framework_TestCase
             ->method('getDeclaration')
             ->willReturn($itemDeclaration);
 
-        $this->assertSame($expectedDeclaration, (new ArrayOf($itemType))->getDeclaration());
+        $arrayOf = new ArrayOf($itemType);
+
+        $this->assertSame($itemType, $arrayOf->getItemType());
+        $this->assertSame($expectedDeclaration, $arrayOf->getDeclaration());
     }
 
     public function providerGetDeclaration()

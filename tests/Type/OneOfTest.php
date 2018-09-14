@@ -15,7 +15,10 @@ class OneOfTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetDeclaration(array $expectedValues, $expectedDeclaration)
     {
-        $this->assertSame($expectedDeclaration, (new OneOf($expectedValues))->getDeclaration());
+        $oneOf = new OneOf($expectedValues);
+
+        $this->assertSame($expectedDeclaration, $oneOf->getDeclaration());
+        $this->assertSame($expectedValues, $oneOf->getExpectedValues());
     }
 
     public function providerGetDeclaration()

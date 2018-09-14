@@ -12,7 +12,10 @@ class ClassOfTest extends \PHPUnit_Framework_TestCase
 {
     public function testGetDeclaration()
     {
-        $this->assertSame(\DateTime::class, (new ClassOf(\DateTime::class))->getDeclaration());
+        $class = \DateTime::class;
+        $classOf = new ClassOf($class);
+
+        $this->assertSame($class, $classOf->getDeclaration());
     }
 
     /**

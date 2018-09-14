@@ -13,7 +13,13 @@ class ShapeTest extends \PHPUnit_Framework_TestCase
 {
     public function testGetDeclaration()
     {
-        $this->assertSame('Foo', (new Shape('Foo', []))->getDeclaration());
+        $types = [
+            'foo' => $this->createMock(TypeInterface::class)
+        ];
+        $shape = new Shape('Foo', $types);
+
+        $this->assertSame('Foo', $shape->getDeclaration());
+        $this->assertSame($types, $shape->getTypes());
     }
 
     public function testValidateReturnsTrue()

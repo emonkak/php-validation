@@ -27,7 +27,10 @@ class OneOfTypeTest extends \PHPUnit_Framework_TestCase
             $types[] = $type;
         }
 
-        $this->assertSame($expectedDeclaration, (new OneOfType($types))->getDeclaration());
+        $oneOfType = new OneOfType($types);
+
+        $this->assertSame($expectedDeclaration, $oneOfType->getDeclaration());
+        $this->assertSame($types, $oneOfType->getTypes());
     }
 
     public function providerGetDeclaration()
@@ -117,5 +120,18 @@ class OneOfTypeTest extends \PHPUnit_Framework_TestCase
             ->willReturn(false);
 
         $this->assertFalse($type->validate($key, $value, $collector));
+    }
+
+    public function testUnion()
+    {
+        $type1 = $this->createMock(TypeInterface::class);
+        $type2 = $this->createMock(TypeInterface::class);
+
+        $oneOfType = new OneOfType([$type1]);
+        $unionType = $oneOfType->union($type2);
+
+        $this->assertInstanceOf(oneOfType::class, $unionType);
+        $this->assertNotSame($oneOfType, $unionType);
+        $this->assertSame([$type1, $type2], $unionType->getTypes());
     }
 }
