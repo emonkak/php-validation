@@ -6,7 +6,7 @@ use Emonkak\Validation\Collector\CollectorInterface;
 
 class Optional implements TypeInterface
 {
-    use ConstraintTrait;
+    use TypeTrait;
 
     /**
      * @var TypeInterface

@@ -6,8 +6,7 @@ use Emonkak\Validation\Collector\CollectorInterface;
 
 class ArrayOf implements TypeInterface
 {
-    use ConstraintTrait;
-    use OptionalTrait;
+    use TypeTrait;
 
     /**
      * @var TypeInterface

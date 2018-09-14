@@ -5,17 +5,27 @@ namespace Emonkak\Validation\Tests\Type;
 use Emonkak\Validation\Collector\CollectorInterface;
 use Emonkak\Validation\Constraint\ConstraintInterface;
 use Emonkak\Validation\Type\Constrained;
-use Emonkak\Validation\Type\ConstraintTrait;
+use Emonkak\Validation\Type\Optional;
 use Emonkak\Validation\Type\TypeInterface;
+use Emonkak\Validation\Type\TypeTrait;
 
 /**
- * @covers Emonkak\Validation\Type\ConstraintTrait
+ * @covers Emonkak\Validation\Type\TypeTrait
  */
-class ConstraintTraitTest extends \PHPUnit_Framework_TestCase
+class TypeTraitTest extends \PHPUnit_Framework_TestCase
 {
+    public function testIsOptional()
+    {
+        $type = new ConcreteTypeTrait();
+        $optionalType = $type->isOptional();
+
+        $this->assertInstanceOf(Optional::class, $optionalType);
+        $this->assertSame($type, $optionalType->getType());
+    }
+
     public function testWithConstraints()
     {
-        $type = new ConcreteConstraintTrait();
+        $type = new ConcreteTypeTrait();
 
         $constraint = $this->createMock(ConstraintInterface::class);
         $constrainedType = $type->withConstraints($constraint);
@@ -26,9 +36,9 @@ class ConstraintTraitTest extends \PHPUnit_Framework_TestCase
     }
 }
 
-class ConcreteConstraintTrait implements TypeInterface
+class ConcreteTypeTrait implements TypeInterface
 {
-    use ConstraintTrait;
+    use TypeTrait;
 
     public function getDeclaration()
     {

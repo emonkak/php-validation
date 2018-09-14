@@ -7,7 +7,7 @@ use Emonkak\Validation\Constraint\ConstraintInterface;
 
 class Constrained implements TypeInterface
 {
-    use OptionalTrait;
+    use TypeTrait;
 
     /**
      * @var TypeInterface

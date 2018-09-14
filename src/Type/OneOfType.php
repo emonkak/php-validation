@@ -7,8 +7,7 @@ use Emonkak\Validation\Collector\NullCollector;
 
 class OneOfType implements TypeInterface
 {
-    use ConstraintTrait;
-    use OptionalTrait;
+    use TypeTrait;
 
     /**
      * @param TypeInterface[] $types
