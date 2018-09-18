@@ -176,29 +176,6 @@ class TypesTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider providerEmpty
-     */
-    public function testEmpty($value, $expectedResult)
-    {
-        $key = 'key';
-        $type = Types::_empty();
-        $collector = $this->createMock(CollectorInterface::class);
-
-        $this->assertSame($expectedResult, $type->validate($key, $value, $collector));
-        $this->assertSame('(null|"")', $type->getDeclaration());
-    }
-
-    public function providerEmpty()
-    {
-        return [
-            [0, false],
-            ['foo', false],
-            ['', true],
-            [null, true]
-        ];
-    }
-
-    /**
      * @dataProvider providerInt
      */
     public function testInt($value, $expectedResult)

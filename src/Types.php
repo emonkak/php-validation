@@ -79,14 +79,6 @@ final class Types
     }
 
     /**
-     * @return TypeInterface
-     */
-    public static function _empty()
-    {
-        return new OneOf([null, ''], true);
-    }
-
-    /**
      * @param int $min
      * @param int $max
      * @return TypeInterface
