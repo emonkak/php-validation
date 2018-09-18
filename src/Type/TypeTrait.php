@@ -7,7 +7,15 @@ use Emonkak\Validation\Constraint\ConstraintInterface;
 trait TypeTrait
 {
     /**
-     * @return Optional
+     * @return TypeInterface
+     */
+    public function allowEmpty()
+    {
+        return new OneOfType([$this, new OneOf(['', null], true)]);
+    }
+
+    /**
+     * @return TypeInterface
      */
     public function isOptional()
     {

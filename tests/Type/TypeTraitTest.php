@@ -15,13 +15,31 @@ use Emonkak\Validation\Type\TypeTrait;
  */
 class TypeTraitTest extends \PHPUnit_Framework_TestCase
 {
+    public function testAllowEmpty()
+    {
+        $key = 'key';
+        $type = new ConcreteTypeTrait();
+        $emptyAllowedType = $type->allowEmpty();
+
+        $collector = $this->createMock(CollectorInterface::class);
+
+        $this->assertInstanceOf(TypeInterface::class, $emptyAllowedType);
+        $this->assertTrue($emptyAllowedType->validate($key, null, $collector));
+        $this->assertTrue($emptyAllowedType->validate($key, '', $collector));
+        $this->assertFalse($emptyAllowedType->validate($key, 123, $collector));
+    }
+
     public function testIsOptional()
     {
+        $key = 'key';
         $type = new ConcreteTypeTrait();
         $optionalType = $type->isOptional();
 
-        $this->assertInstanceOf(Optional::class, $optionalType);
-        $this->assertSame($type, $optionalType->getType());
+        $collector = $this->createMock(CollectorInterface::class);
+
+        $this->assertInstanceOf(TypeInterface::class, $optionalType);
+        $this->assertTrue($optionalType->validate($key, null, $collector));
+        $this->assertFalse($optionalType->validate($key, 123, $collector));
     }
 
     public function testWithConstraints()
@@ -58,6 +76,6 @@ class ConcreteTypeTrait implements TypeInterface
 
     public function validate($key, $value, CollectorInterface $collector)
     {
-        return true;
+        return false;
     }
 }
