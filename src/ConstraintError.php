@@ -37,9 +37,10 @@ class ConstraintError
     public function __toString()
     {
         return sprintf(
-            'The property `%s` must satisfy the constraint: %s',
+            'The property `%s` must satisfy the constraint `%s`, got `%s`.',
             $this->key,
-            $this->constraint->getDeclaration()
+            $this->constraint->getDeclaration(),
+            var_export($this->value, true)
         );
     }
 

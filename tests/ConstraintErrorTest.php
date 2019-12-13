@@ -38,6 +38,7 @@ class ConstraintErrorTest extends \PHPUnit_Framework_TestCase
         $errorString = (string) $error;
 
         $this->assertContains("`$key`", $errorString);
-        $this->assertContains('my_constraint', $errorString);
+        $this->assertContains('`my_constraint`', $errorString);
+        $this->assertContains("`'value'`", $errorString);
     }
 }
