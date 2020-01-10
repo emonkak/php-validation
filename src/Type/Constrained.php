@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Validation\Type;
 
 use Emonkak\Validation\Collector\CollectorInterface;
@@ -20,7 +22,6 @@ class Constrained implements TypeInterface
     private $constraints;
 
     /**
-     * @param TypeInterface         $type
      * @param ConstraintInterface[] $constraints
      */
     public function __construct(TypeInterface $type, array $constraints)
@@ -29,10 +30,7 @@ class Constrained implements TypeInterface
         $this->constraints = $constraints;
     }
 
-    /**
-     * @return TypeInterface
-     */
-    public function getType()
+    public function getType(): TypeInterface
     {
         return $this->type;
     }
@@ -45,18 +43,12 @@ class Constrained implements TypeInterface
         return $this->constraints;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getDeclaration()
+    public function getDeclaration(): string
     {
         return $this->type->getDeclaration();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function validate($key, $value, CollectorInterface $collector)
+    public function validate(string $key, $value, CollectorInterface $collector): bool
     {
         if (!$this->type->validate($key, $value, $collector)) {
             return false;
@@ -72,11 +64,7 @@ class Constrained implements TypeInterface
         return true;
     }
 
-    /**
-     * @param ConstraintInterface[] $constraints
-     * @return $this
-     */
-    public function withConstraints(ConstraintInterface ...$constraints)
+    public function withConstraints(ConstraintInterface ...$constraints): Constrained
     {
         return new Constrained(
             $this->type,

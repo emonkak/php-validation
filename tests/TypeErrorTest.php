@@ -1,16 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Validation\Tests;
 
 use Emonkak\Validation\TypeError;
 use Emonkak\Validation\Type\TypeInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Emonkak\Validation\TypeError
  */
-class TypeErrorTest extends \PHPUnit_Framework_TestCase
+class TypeErrorTest extends TestCase
 {
-    public function testConstrutor()
+    public function testConstrutor(): void
     {
         $key = 'key';
         $value = 'value';
@@ -22,7 +25,7 @@ class TypeErrorTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($type, $error->getExpectedType());
     }
 
-    public function testToString()
+    public function testToString(): void
     {
         $key = 'key';
         $value = 'value';

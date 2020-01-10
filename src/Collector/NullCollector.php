@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Validation\Collector;
 
 use Emonkak\Validation\Type\TypeInterface;
@@ -7,17 +9,11 @@ use Emonkak\Validation\Constraint\ConstraintInterface;
 
 class NullCollector implements CollectorInterface
 {
-    /**
-     * {@inheritDoc}
-     */
-    public function collectTypeError($key, $value, TypeInterface $type)
+    public function collectTypeError(string $key, $value, TypeInterface $type): void
     {
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function collectConstraintError($key, $value, ConstraintInterface $constraint)
+    public function collectConstraintError(string $key, $value, ConstraintInterface $constraint): void
     {
     }
 }

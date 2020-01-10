@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Validation\Tests\Type;
 
 use Emonkak\Validation\Collector\CollectorInterface;
@@ -9,13 +11,14 @@ use Emonkak\Validation\Type\OneOfType;
 use Emonkak\Validation\Type\Optional;
 use Emonkak\Validation\Type\TypeInterface;
 use Emonkak\Validation\Type\TypeTrait;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Emonkak\Validation\Type\TypeTrait
  */
-class TypeTraitTest extends \PHPUnit_Framework_TestCase
+class TypeTraitTest extends TestCase
 {
-    public function testAllowEmpty()
+    public function testAllowEmpty(): void
     {
         $key = 'key';
         $type = new ConcreteTypeTrait();
@@ -29,7 +32,7 @@ class TypeTraitTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($emptyAllowedType->validate($key, 123, $collector));
     }
 
-    public function testIsOptional()
+    public function testIsOptional(): void
     {
         $key = 'key';
         $type = new ConcreteTypeTrait();
@@ -42,7 +45,7 @@ class TypeTraitTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($optionalType->validate($key, 123, $collector));
     }
 
-    public function testWithConstraints()
+    public function testWithConstraints(): void
     {
         $type = new ConcreteTypeTrait();
 
@@ -54,7 +57,7 @@ class TypeTraitTest extends \PHPUnit_Framework_TestCase
         $this->assertSame([$constraint], $constrainedType->getConstraints());
     }
 
-    public function testUnion()
+    public function testUnion(): void
     {
         $type = new ConcreteTypeTrait();
         $altType = $this->createMock(TypeInterface::class);
@@ -69,12 +72,12 @@ class ConcreteTypeTrait implements TypeInterface
 {
     use TypeTrait;
 
-    public function getDeclaration()
+    public function getDeclaration(): string
     {
         return 'string';
     }
 
-    public function validate($key, $value, CollectorInterface $collector)
+    public function validate(string $key, $value, CollectorInterface $collector): bool
     {
         return false;
     }

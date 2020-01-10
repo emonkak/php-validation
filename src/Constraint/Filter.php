@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Validation\Constraint;
 
 class Filter implements ConstraintInterface
@@ -19,11 +21,7 @@ class Filter implements ConstraintInterface
      */
     private $options;
 
-    /**
-     * @param string $filter
-     * @param mixed  $options
-     */
-    public function __construct($filter, $options = null)
+    public function __construct(string $filter, $options = null)
     {
         $filterId = filter_id($filter);
         if ($filterId === false) {
@@ -35,18 +33,12 @@ class Filter implements ConstraintInterface
         $this->options = $options;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getDeclaration()
+    public function getDeclaration(): string
     {
         return "The value must satisfy the validate filter: {$this->filter}.";
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function isSatisfiedBy($value)
+    public function isSatisfiedBy($value): bool
     {
         $result = $this->options !== null
             ? filter_var($value, $this->filterId, $this->options)
@@ -61,10 +53,7 @@ class Filter implements ConstraintInterface
         }
     }
 
-    /**
-     * @return int
-     */
-    private function getFlags()
+    private function getFlags(): int
     {
         if (is_int($this->options)) {
             return $this->options;

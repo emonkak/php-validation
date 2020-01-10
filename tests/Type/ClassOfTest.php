@@ -1,16 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Validation\Tests\Type;
 
 use Emonkak\Validation\Collector\CollectorInterface;
 use Emonkak\Validation\Type\ClassOf;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Emonkak\Validation\Type\ClassOf
  */
-class ClassOfTest extends \PHPUnit_Framework_TestCase
+class ClassOfTest extends TestCase
 {
-    public function testGetDeclaration()
+    public function testGetDeclaration(): void
     {
         $class = \DateTime::class;
         $classOf = new ClassOf($class);
@@ -21,7 +24,7 @@ class ClassOfTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider providerValidateReturnsTrue
      */
-    public function testValidateReturnsTrue($class, $value)
+    public function testValidateReturnsTrue($class, $value): void
     {
         $key = 'foo';
         $type = new ClassOf($class);
@@ -34,7 +37,7 @@ class ClassOfTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($type->validate($key, $value, $collector));
     }
 
-    public function providerValidateReturnsTrue()
+    public function providerValidateReturnsTrue(): array
     {
         return [
             [\DateTime::class, new \DateTime()],
@@ -46,7 +49,7 @@ class ClassOfTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider providerValidateReturnsFalse
      */
-    public function testValidateReturnsFalse($class, $value)
+    public function testValidateReturnsFalse($class, $value): void
     {
         $key = 'foo';
         $type = new ClassOf($class);
@@ -64,7 +67,7 @@ class ClassOfTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($type->validate($key, $value, $collector));
     }
 
-    public function providerValidateReturnsFalse()
+    public function providerValidateReturnsFalse(): array
     {
         return [
             [\DateTime::class, new \DateTimeImmutable()],

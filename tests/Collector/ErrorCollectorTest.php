@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Validation\Tests\Collector;
 
 use Emonkak\Validation\Collector\ErrorCollector;
@@ -7,13 +9,14 @@ use Emonkak\Validation\ConstraintError;
 use Emonkak\Validation\Constraint\ConstraintInterface;
 use Emonkak\Validation\TypeError;
 use Emonkak\Validation\Type\TypeInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Emonkak\Validation\Collector\ErrorCollector
  */
-class ErrorCollectorTest extends \PHPUnit_Framework_TestCase
+class ErrorCollectorTest extends TestCase
 {
-    public function testCollectTypeError()
+    public function testCollectTypeError(): void
     {
         $key = 'key';
         $value = 'value';
@@ -27,7 +30,7 @@ class ErrorCollectorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals([new TypeError($key, $value, $type)], $collector->toArray());
     }
 
-    public function testCollectConstraintError()
+    public function testCollectConstraintError(): void
     {
         $key = 'key';
         $value = 'value';

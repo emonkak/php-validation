@@ -1,24 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Validation\Tests\Constraint;
 
 use Emonkak\Validation\Collector\CollectorInterface;
 use Emonkak\Validation\Constraint\Length;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Emonkak\Validation\Constraint\Length
  */
-class LengthTest extends \PHPUnit_Framework_TestCase
+class LengthTest extends TestCase
 {
     /**
      * @expectedException InvalidArgumentException
      */
-    public function testConstructorThrowsInvalidArgumentException()
+    public function testConstructorThrowsInvalidArgumentException(): void
     {
         new Length(3, 1);
     }
 
-    public function testGetDeclaration()
+    public function testGetDeclaration(): void
     {
         $this->assertNotEmpty((new Length(1, 3))->getDeclaration());
     }
@@ -26,13 +29,13 @@ class LengthTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider providerIsSatisfiedBy
      */
-    public function testIsSatisfiedBy($value, $expectedResult)
+    public function testIsSatisfiedBy($value, $expectedResult): void
     {
         $constraint = new Length(1, 3);
         $this->assertSame($expectedResult, $constraint->isSatisfiedBy($value));
     }
 
-    public function providerIsSatisfiedBy()
+    public function providerIsSatisfiedBy(): array
     {
         return [
             ['', false],

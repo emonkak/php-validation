@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Validation\Type;
 
 use Emonkak\Validation\Collector\CollectorInterface;
@@ -9,30 +11,24 @@ class ClassOf implements TypeInterface
     use TypeTrait;
 
     /**
-     * @var string
+     * @var class-string
      */
     private $class;
 
     /**
-     * @param string $class
+     * @param class-string $class
      */
     public function __construct($class)
     {
         $this->class = $class;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getDeclaration()
+    public function getDeclaration(): string
     {
         return $this->class;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function validate($key, $value, CollectorInterface $collector)
+    public function validate(string $key, $value, CollectorInterface $collector): bool
     {
         if (!($value instanceof $this->class)) {
             $collector->collectTypeError($key, $value, $this);

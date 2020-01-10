@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Validation\Constraint;
 
 class Between implements ConstraintInterface
@@ -28,18 +30,12 @@ class Between implements ConstraintInterface
         $this->max = $max;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getDeclaration()
+    public function getDeclaration(): string
     {
         return "The number must be between {$this->min} and {$this->max}.";
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function isSatisfiedBy($value)
+    public function isSatisfiedBy($value): bool
     {
         return $this->min <= $value && $value <= $this->max;
     }

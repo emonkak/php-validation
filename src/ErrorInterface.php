@@ -1,21 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Validation;
 
 interface ErrorInterface
 {
-    /**
-     * @return string
-     */
-    public function __toString();
+    public function __toString(): string;
 
     /**
      * @return string
      */
-    public function getKey();
+    public function getKey(): string;
 
-    /**
-     * @return string
-     */
     public function getValue();
 }

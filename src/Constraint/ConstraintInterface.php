@@ -1,17 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Validation\Constraint;
 
 interface ConstraintInterface
 {
-    /**
-     * @return string
-     */
-    public function getDeclaration();
+    public function getDeclaration(): string;
 
-    /**
-     * @param mixed $value
-     * @return bool
-     */
-    public function isSatisfiedBy($value);
+    public function isSatisfiedBy($value): bool;
 }

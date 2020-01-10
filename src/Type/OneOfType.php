@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Validation\Type;
 
 use Emonkak\Validation\Collector\CollectorInterface;
@@ -8,6 +10,11 @@ use Emonkak\Validation\Collector\NullCollector;
 class OneOfType implements TypeInterface
 {
     use TypeTrait;
+
+    /**
+     * @var TypeInterface[]
+     */
+    private $types;
 
     /**
      * @param TypeInterface[] $types
@@ -20,15 +27,12 @@ class OneOfType implements TypeInterface
     /**
      * @return TypeInterface[]
      */
-    public function getTypes()
+    public function getTypes(): array
     {
         return $this->types;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getDeclaration()
+    public function getDeclaration(): string
     {
         $declarations = [];
 
@@ -39,10 +43,7 @@ class OneOfType implements TypeInterface
         return '(' . implode('|', $declarations) . ')';
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function validate($key, $value, CollectorInterface $collector)
+    public function validate(string $key, $value, CollectorInterface $collector): bool
     {
         $isValid = false;
         $nullCollector = new NullCollector();
@@ -61,10 +62,7 @@ class OneOfType implements TypeInterface
         return $isValid;
     }
 
-    /**
-     * @return TypeInterface
-     */
-    public function union(TypeInterface ...$types)
+    public function union(TypeInterface ...$types): TypeInterface
     {
         return new OneOfType(array_merge($this->types, $types));
     }

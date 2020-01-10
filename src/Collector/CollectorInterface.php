@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Validation\Collector;
 
 use Emonkak\Validation\Type\TypeInterface;
@@ -7,17 +9,7 @@ use Emonkak\Validation\Constraint\ConstraintInterface;
 
 interface CollectorInterface
 {
-    /**
-     * @param string        $key
-     * @param mixed         $value
-     * @param TypeInterface $type
-     */
-    public function collectTypeError($key, $value, TypeInterface $type);
+    public function collectTypeError(string $key, $value, TypeInterface $type): void;
 
-    /**
-     * @param string              $key
-     * @param mixed               $value
-     * @param ConstraintInterface $type
-     */
-    public function collectConstraintError($key, $value, ConstraintInterface $type);
+    public function collectConstraintError(string $key, $value, ConstraintInterface $type): void;
 }

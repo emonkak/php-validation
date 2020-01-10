@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Validation\Type;
 
 use Emonkak\Validation\Collector\CollectorInterface;
@@ -14,40 +16,34 @@ class Shape implements TypeInterface
     private $declaration;
 
     /**
-     * @var array<string, TypeInterface>
+     * @var array<string,TypeInterface>
      */
     private $types;
 
     /**
-     * @param string                       $declaration
-     * @param array<string, TypeInterface> $types
+     * @param string $declaration
+     * @param array<string,TypeInterface> $types
      */
-    public function __construct($declaration, array $types)
+    public function __construct(string $declaration, array $types)
     {
         $this->declaration = $declaration;
         $this->types = $types;
     }
 
     /**
-     * @return array
+     * @return array<string,TypeInterface>
      */
-    public function getTypes()
+    public function getTypes(): array
     {
         return $this->types;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getDeclaration()
+    public function getDeclaration(): string
     {
         return $this->declaration;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function validate($key, $value, CollectorInterface $collector)
+    public function validate(string $key, $value, CollectorInterface $collector): bool
     {
         if (!is_array($value)) {
             $collector->collectTypeError($key, $value, $this);

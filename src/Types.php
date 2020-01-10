@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Validation;
 
 use Emonkak\Validation\Constraint\Between;
@@ -27,47 +29,30 @@ final class Types
     {
     }
 
-    /**
-     * @return TypeInterface
-     */
-    public static function any()
+    public static function any(): TypeInterface
     {
         return new Any();
     }
 
-    /**
-     * @return TypeInterface
-     */
-    public static function date()
+    public static function date(): TypeInterface
     {
         return (new Primitive('string'))
            ->withConstraints(new Matches('/^' . self::DATE_PATTERN . '$/'));
     }
 
-    /**
-     * @return TypeInterface
-     */
-    public static function dateTime()
+    public static function dateTime(): TypeInterface 
     {
         return (new Primitive('string'))
            ->withConstraints(new Matches('/^' . self::DATE_PATTERN . ' ' . self::TIME_PATTERN . '$/'));
     }
 
-    /**
-     * @return TypeInterface
-     */
-    public static function time()
+    public static function time(): TypeInterface 
     {
         return (new Primitive('string'))
            ->withConstraints(new Matches('/^' . self::TIME_PATTERN . '$/'));
     }
 
-    /**
-     * @param int $minLength
-     * @param int $maxLength
-     * @return TypeInterface
-     */
-    public static function string($minLength = 0, $maxLength = INF)
+    public static function string(int $minLength = 0, int $maxLength = PHP_INT_MAX): TypeInterface 
     {
         $type = new Primitive('string');
 
@@ -78,12 +63,7 @@ final class Types
         return $type;
     }
 
-    /**
-     * @param int $min
-     * @param int $max
-     * @return TypeInterface
-     */
-    public static function int($min = -INF, $max = INF)
+    public static function int(int $min = PHP_INT_MIN, int $max = PHP_INT_MAX): TypeInterface
     {
         $type = new Primitive('integer');
 
@@ -94,12 +74,7 @@ final class Types
         return $type;
     }
 
-    /**
-     * @param int $min
-     * @param int $max
-     * @return TypeInterface
-     */
-    public static function float($min = -INF, $max = INF)
+    public static function float(float $min = -INF, float $max = INF): TypeInterface
     {
         $type = new Primitive('double');
 
@@ -110,83 +85,59 @@ final class Types
         return $type;
     }
 
-    /**
-     * @return TypeInterface
-     */
-    public static function bool()
+    public static function bool(): TypeInterface
     {
         return new Primitive('boolean');
     }
 
-    /**
-     * @return TypeInterface
-     */
-    public static function digit()
+    public static function digit(): TypeInterface
     {
         return (new Any())
             ->withConstraints(new Filter('int'));
     }
 
-    /**
-     * @return TypeInterface
-     */
-    public static function decimal()
+    public static function decimal(): TypeInterface
     {
         return (new Any())
             ->withConstraints(new Filter('float'));
     }
 
-    /**
-     * @return TypeInterface
-     */
-    public static function accepted()
+    public static function accepted(): TypeInterface
     {
         return (new Any())
             ->withConstraints(new Filter('boolean', FILTER_NULL_ON_FAILURE));
     }
 
-    /**
-     * @return TypeInterface
-     */
-    public static function arrayOf(TypeInterface $type)
+    public static function arrayOf(TypeInterface $type): TypeInterface
     {
         return new ArrayOf($type);
     }
 
     /**
-     * @param string $class
-     * @return TypeInterface
+     * @param class-string $class
      */
-    public static function classOf($class)
+    public static function classOf(string $class): TypeInterface
     {
         return new ClassOf($class);
     }
 
-    /**
-     * @param mixed[] $expectedValues
-     * @param bool    $strict
-     * @return TypeInterface
-     */
-    public static function oneOf(array $expectedValues, $strict = false)
+    public static function oneOf(array $expectedValues, bool $strict = false): TypeInterface
     {
         return new OneOf($expectedValues, $strict);
     }
 
     /**
-     * @param TypeInterface[] $expectedValues
-     * @return TypeInterface
+     * @param TypeInterface[] $expectedTypes
      */
-    public static function oneOfType(array $expectedTypes)
+    public static function oneOfType(array $expectedTypes): TypeInterface
     {
         return new OneOfType($expectedTypes);
     }
 
     /**
-     * @param string $declaration
-     * @param array<string, TypeInterface> $types
-     * @return TypeInterface
+     * @param array<string,TypeInterface> $types
      */
-    public static function shape($declaration, array $types)
+    public static function shape(string $declaration, array $types): TypeInterface
     {
         return new Shape($declaration, $types);
     }

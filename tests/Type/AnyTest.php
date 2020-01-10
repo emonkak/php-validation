@@ -1,16 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Validation\Tests\Type;
 
 use Emonkak\Validation\Collector\CollectorInterface;
 use Emonkak\Validation\Type\Any;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Emonkak\Validation\Type\Any
  */
-class AnyTest extends \PHPUnit_Framework_TestCase
+class AnyTest extends TestCase
 {
-    public function testGetDeclaration()
+    public function testGetDeclaration(): void
     {
         $this->assertSame('any', (new Any())->getDeclaration());
     }
@@ -18,7 +21,7 @@ class AnyTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider providerValidateReturnsTrue
      */
-    public function testValidateReturnsTrue($value)
+    public function testValidateReturnsTrue($value): void
     {
         $key = 'foo';
         $type = new Any();
@@ -31,7 +34,7 @@ class AnyTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($type->validate($key, $value, $collector));
     }
 
-    public function providerValidateReturnsTrue()
+    public function providerValidateReturnsTrue(): array
     {
         return [
             [true],
@@ -42,7 +45,7 @@ class AnyTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
-    public function testValidateReturnsFalse()
+    public function testValidateReturnsFalse(): void
     {
         $key = 'foo';
         $type = new Any();

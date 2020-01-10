@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Validation\Type;
 
 use Emonkak\Validation\Collector\CollectorInterface;
@@ -13,26 +15,17 @@ class Primitive implements TypeInterface
      */
     private $declaration;
 
-    /**
-     * @param string $type
-     */
-    public function __construct($declaration)
+    public function __construct(string $declaration)
     {
         $this->declaration = $declaration;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getDeclaration()
+    public function getDeclaration(): string
     {
         return $this->declaration;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function validate($key, $value, CollectorInterface $collector)
+    public function validate(string $key, $value, CollectorInterface $collector): bool
     {
         if (gettype($value) !== $this->declaration) {
             $collector->collectTypeError($key, $value, $this);

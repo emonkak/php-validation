@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Validation\Tests;
 
 use Emonkak\Validation\Collector\CollectorInterface;
@@ -7,13 +9,14 @@ use Emonkak\Validation\ErrorBagInterface;
 use Emonkak\Validation\TypeError;
 use Emonkak\Validation\Type\TypeInterface;
 use Emonkak\Validation\Validator;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Emonkak\Validation\Validator
  */
-class ValidatorTest extends \PHPUnit_Framework_TestCase
+class ValidatorTest extends TestCase
 {
-    public function testValidate()
+    public function testValidate(): void
     {
         $types = [
             'foo' => $this->createMock(TypeInterface::class),
@@ -40,6 +43,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
             )
             ->will($this->returnCallback(function($key, $value, $collector) use ($types) {
                 $collector->collectTypeError($key, $value, $types['bar']);
+                return false;
             }));
         $types['baz']
             ->expects($this->once())
@@ -51,6 +55,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
             )
             ->will($this->returnCallback(function($key, $value, $collector) use ($types) {
                 $collector->collectTypeError($key, $value, $types['baz']);
+                return false;
             }));
 
         $data = [

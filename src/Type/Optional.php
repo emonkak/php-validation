@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Validation\Type;
 
 use Emonkak\Validation\Collector\CollectorInterface;
@@ -21,27 +23,18 @@ class Optional implements TypeInterface
         $this->type = $type;
     }
 
-    /**
-     * @return TypeInterface
-     */
-    public function getType()
+    public function getType(): TypeInterface
     {
         return $this->type;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getDeclaration()
+    public function getDeclaration(): string
     {
         $declaration = $this->type->getDeclaration();
         return '?' . $declaration;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function validate($key, $value, CollectorInterface $collector)
+    public function validate(string $key, $value, CollectorInterface $collector): bool
     {
         if ($value !== null) {
             if (!$this->type->validate($key, $value, $collector)) {

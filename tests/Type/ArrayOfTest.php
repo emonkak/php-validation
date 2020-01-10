@@ -1,20 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Validation\Tests\Type;
 
 use Emonkak\Validation\Collector\CollectorInterface;
 use Emonkak\Validation\Type\ArrayOf;
 use Emonkak\Validation\Type\TypeInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Emonkak\Validation\Type\ArrayOf
  */
-class ArrayOfTest extends \PHPUnit_Framework_TestCase
+class ArrayOfTest extends TestCase
 {
     /**
      * @dataProvider providerGetDeclaration
      */
-    public function testGetDeclaration($itemDeclaration, $expectedDeclaration)
+    public function testGetDeclaration($itemDeclaration, $expectedDeclaration): void
     {
         $itemType = $this->createMock(TypeInterface::class);
         $itemType
@@ -28,7 +31,7 @@ class ArrayOfTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expectedDeclaration, $arrayOf->getDeclaration());
     }
 
-    public function providerGetDeclaration()
+    public function providerGetDeclaration(): array
     {
         return [
             ['integer', 'integer[]'],
@@ -36,7 +39,7 @@ class ArrayOfTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
-    public function testValidateReturnsTrue()
+    public function testValidateReturnsTrue(): void
     {
         $key = 'foo';
         $value = [
@@ -84,7 +87,7 @@ class ArrayOfTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($type->validate($key, $value, $collector));
     }
 
-    public function testValidateReturnsFalse()
+    public function testValidateReturnsFalse(): void
     {
         $key = 'foo';
         $value = [
@@ -132,7 +135,7 @@ class ArrayOfTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($type->validate($key, $value, $collector));
     }
 
-    public function testValidateWithNull()
+    public function testValidateWithNull(): void
     {
         $key = 'foo';
         $value = null;

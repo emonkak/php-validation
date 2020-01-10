@@ -1,40 +1,32 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Validation\Type;
 
 use Emonkak\Validation\Constraint\ConstraintInterface;
 
 trait TypeTrait
 {
-    /**
-     * @return TypeInterface
-     */
-    public function allowEmpty()
+    public function allowEmpty(): TypeInterface
     {
+        assert($this instanceof TypeInterface);
         return new OneOfType([$this, new OneOf(['', null], true)]);
     }
 
-    /**
-     * @return TypeInterface
-     */
-    public function isOptional()
+    public function isOptional(): TypeInterface
     {
+        assert($this instanceof TypeInterface);
         return new Optional($this);
     }
 
-    /**
-     * @param ConstraintInterface[] ...$constraints
-     * @return ConstrainedType
-     */
-    public function withConstraints(ConstraintInterface ...$constraints)
+    public function withConstraints(ConstraintInterface ...$constraints): Constrained
     {
+        assert($this instanceof TypeInterface);
         return new Constrained($this, $constraints);
     }
 
-    /**
-     * @return TypeInterface
-     */
-    public function union(TypeInterface ...$types)
+    public function union(TypeInterface ...$types): TypeInterface
     {
         return new OneOfType(array_merge([$this], $types));
     }

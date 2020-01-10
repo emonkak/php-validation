@@ -1,16 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Validation\Tests\Type;
 
 use Emonkak\Validation\Collector\CollectorInterface;
 use Emonkak\Validation\Type\Primitive;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Emonkak\Validation\Type\Primitive
  */
-class PrimitiveTest extends \PHPUnit_Framework_TestCase
+class PrimitiveTest extends TestCase
 {
-    public function testGetDeclaration()
+    public function testGetDeclaration(): void
     {
         $this->assertSame('string', (new Primitive('string'))->getDeclaration());
         $this->assertSame('integer', (new Primitive('integer'))->getDeclaration());
@@ -19,7 +22,7 @@ class PrimitiveTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider providerValidateReturnsTrue
      */
-    public function testValidateReturnsTrue($declaration, $value)
+    public function testValidateReturnsTrue(string $declaration, $value): void
     {
         $key = 'foo';
         $type = new Primitive($declaration);
@@ -32,7 +35,7 @@ class PrimitiveTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($type->validate($key, $value, $collector));
     }
 
-    public function providerValidateReturnsTrue()
+    public function providerValidateReturnsTrue(): array
     {
         return [
             ['string', ''],
@@ -50,7 +53,7 @@ class PrimitiveTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider providerValidateReturnsFalse
      */
-    public function testValidateReturnsFalse($declaration, $value)
+    public function testValidateReturnsFalse(string $declaration, $value): void
     {
         $key = 'foo';
         $type = new Primitive($declaration);
@@ -68,7 +71,7 @@ class PrimitiveTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($type->validate($key, $value, $collector));
     }
 
-    public function providerValidateReturnsFalse()
+    public function providerValidateReturnsFalse(): array
     {
         return [
             ['string', true],

@@ -1,16 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Validation\Tests\Constraint;
 
 use Emonkak\Validation\Collector\CollectorInterface;
 use Emonkak\Validation\Constraint\Matches;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Emonkak\Validation\Constraint\Matches
  */
-class MatchesTest extends \PHPUnit_Framework_TestCase
+class MatchesTest extends TestCase
 {
-    public function testGetDeclaration()
+    public function testGetDeclaration(): void
     {
         $pattern = '/.*/';
         $this->assertContains($pattern, (new Matches($pattern))->getDeclaration());
@@ -19,13 +22,13 @@ class MatchesTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider providerIsSatisfiedBy
      */
-    public function testIsSatisfiedBy($pattern, $value, $expectedResult)
+    public function testIsSatisfiedBy($pattern, $value, $expectedResult): void
     {
         $constraint = new Matches($pattern);
         $this->assertSame($expectedResult, $constraint->isSatisfiedBy($value));
     }
 
-    public function providerIsSatisfiedBy()
+    public function providerIsSatisfiedBy(): array
     {
         return [
             ['//', '', true],

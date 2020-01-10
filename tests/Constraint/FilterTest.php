@@ -1,23 +1,26 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Validation\Tests\Constraint;
 
 use Emonkak\Validation\Constraint\Filter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Emonkak\Validation\Constraint\Filter
  */
-class FilterTest extends \PHPUnit_Framework_TestCase
+class FilterTest extends TestCase
 {
     /**
      * @expectedException InvalidArgumentException
      */
-    public function testConstructorThrowsInvalidArgumentException()
+    public function testConstructorThrowsInvalidArgumentException(): void
     {
         new Filter('invalid');
     }
 
-    public function testGetDeclaration()
+    public function testGetDeclaration(): void
     {
         $constraint = new Filter('int');
 
@@ -27,7 +30,7 @@ class FilterTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider providerValidateReturnsTrue
      */
-    public function testIsSatisfiedByReturnsTrue($filter, $options, $value, $expectedResult)
+    public function testIsSatisfiedByReturnsTrue($filter, $options, $value, $expectedResult): void
     {
         $constraint = new Filter($filter, $options);
         $this->assertSame($expectedResult, $constraint->isSatisfiedBy($value));
@@ -36,7 +39,7 @@ class FilterTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expectedResult, $constraint->isSatisfiedBy($value));
     }
 
-    public function providerValidateReturnsTrue()
+    public function providerValidateReturnsTrue(): array
     {
         return [
             ['boolean', FILTER_NULL_ON_FAILURE, true, true],

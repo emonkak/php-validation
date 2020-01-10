@@ -1,17 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Validation\Tests\Type;
 
 use Emonkak\Validation\Collector\CollectorInterface;
 use Emonkak\Validation\Type\Shape;
 use Emonkak\Validation\Type\TypeInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Emonkak\Validation\Type\Shape
  */
-class ShapeTest extends \PHPUnit_Framework_TestCase
+class ShapeTest extends TestCase
 {
-    public function testGetDeclaration()
+    public function testGetDeclaration(): void
     {
         $types = [
             'foo' => $this->createMock(TypeInterface::class)
@@ -22,7 +25,7 @@ class ShapeTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($types, $shape->getTypes());
     }
 
-    public function testValidateReturnsTrue()
+    public function testValidateReturnsTrue(): void
     {
         $key = 'foo';
         $value = [
@@ -63,7 +66,7 @@ class ShapeTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($type->validate($key, $value, $collector));
     }
 
-    public function testValidateReturnsFalse()
+    public function testValidateReturnsFalse(): void
     {
         $key = 'foo';
         $value = [
@@ -104,7 +107,7 @@ class ShapeTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($type->validate($key, $value, $collector));
     }
 
-    public function testValidateWilNull()
+    public function testValidateWilNull(): void
     {
         $key = 'foo';
         $value = null;

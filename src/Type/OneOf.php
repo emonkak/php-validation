@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Validation\Type;
 
 use Emonkak\Validation\Collector\CollectorInterface;
@@ -8,9 +10,6 @@ class OneOf implements TypeInterface
 {
     use TypeTrait;
 
-    /**
-     * @var mixed[]
-     */
     private $expectedValues;
 
     /**
@@ -18,37 +17,23 @@ class OneOf implements TypeInterface
      */
     private $strict;
 
-    /**
-     * @param mixed[] $expectedValues
-     * @param bool    $strict
-     * @param string  $message
-     */
-    public function __construct(array $expectedValues, $strict)
+    public function __construct(array $expectedValues, bool $strict)
     {
         $this->expectedValues = $expectedValues;
         $this->strict = $strict;
     }
 
-    /**
-     * @return mixed[]
-     */
     public function getExpectedValues()
     {
         return $this->expectedValues;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getDeclaration()
+    public function getDeclaration(): string
     {
         return '(' . implode('|', array_map('json_encode', $this->expectedValues)) . ')';
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function validate($key, $value, CollectorInterface $collector)
+    public function validate(string $key, $value, CollectorInterface $collector): bool
     {
         if (!in_array($value, $this->expectedValues, $this->strict)) {
             $collector->collectTypeError($key, $value, $this);

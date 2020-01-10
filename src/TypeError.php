@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Validation;
 
 use Emonkak\Validation\Type\TypeInterface;
@@ -21,22 +23,14 @@ class TypeError implements ErrorInterface
      */
     private $expectedType;
 
-    /**
-     * @param string        $key
-     * @param mixed         $value
-     * @param TypeInterface $expectedType
-     */
-    public function __construct($key, $value, TypeInterface $expectedType)
+    public function __construct(string $key, $value, TypeInterface $expectedType)
     {
         $this->key = $key;
         $this->value = $value;
         $this->expectedType = $expectedType;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function __toString()
+    public function __toString(): string
     {
         return sprintf(
             'The property `%s` must be `%s`, got `%s`.',
@@ -46,26 +40,17 @@ class TypeError implements ErrorInterface
         );
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getKey()
+    public function getKey(): string
     {
         return $this->key;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getValue()
     {
         return $this->value;
     }
 
-    /**
-     * @return TypeInterface
-     */
-    public function getExpectedType()
+    public function getExpectedType(): TypeInterface
     {
         return $this->expectedType;
     }

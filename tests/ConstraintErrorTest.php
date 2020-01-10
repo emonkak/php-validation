@@ -1,16 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Validation\Tests;
 
 use Emonkak\Validation\ConstraintError;
 use Emonkak\Validation\Constraint\ConstraintInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Emonkak\Validation\ConstraintError
  */
-class ConstraintErrorTest extends \PHPUnit_Framework_TestCase
+class ConstraintErrorTest extends TestCase
 {
-    public function testConstrutor()
+    public function testConstrutor(): void
     {
         $key = 'key';
         $value = 'value';
@@ -22,7 +25,7 @@ class ConstraintErrorTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($constraint, $error->getConstraint());
     }
 
-    public function testToString()
+    public function testToString(): void
     {
         $key = 'key';
         $value = 'value';

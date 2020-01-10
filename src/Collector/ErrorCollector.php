@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Validation\Collector;
 
 use Emonkak\Validation\ConstraintError;
 use Emonkak\Validation\Constraint\ConstraintInterface;
 use Emonkak\Validation\ErrorBagInterface;
+use Emonkak\Validation\ErrorInterface;
 use Emonkak\Validation\TypeError;
 use Emonkak\Validation\Type\TypeInterface;
 
@@ -15,10 +18,7 @@ class ErrorCollector implements CollectorInterface, ErrorBagInterface
      */
     private $errors = [];
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getErrors()
+    public function getErrors(): array
     {
         $errors = [];
 
@@ -29,34 +29,22 @@ class ErrorCollector implements CollectorInterface, ErrorBagInterface
         return $errors;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function toArray()
+    public function toArray(): array
     {
         return $this->errors;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function count()
+    public function count(): int
     {
         return count($this->errors);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function collectTypeError($key, $value, TypeInterface $type)
+    public function collectTypeError(string $key, $value, TypeInterface $type): void
     {
         $this->errors[] = new TypeError($key, $value, $type);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function collectConstraintError($key, $value, ConstraintInterface $constraint)
+    public function collectConstraintError(string $key, $value, ConstraintInterface $constraint): void
     {
         $this->errors[] = new ConstraintError($key, $value, $constraint);
     }

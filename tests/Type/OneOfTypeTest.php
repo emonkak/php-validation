@@ -1,20 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Validation\Tests\Type;
 
 use Emonkak\Validation\Collector\CollectorInterface;
 use Emonkak\Validation\Type\OneOfType;
 use Emonkak\Validation\Type\TypeInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Emonkak\Validation\Type\OneOfType
  */
-class OneOfTypeTest extends \PHPUnit_Framework_TestCase
+class OneOfTypeTest extends TestCase
 {
     /**
      * @dataProvider providerGetDeclaration
      */
-    public function testGetDeclaration(array $unionDeclarations, $expectedDeclaration)
+    public function testGetDeclaration(array $unionDeclarations, $expectedDeclaration): void
     {
         $types = [];
 
@@ -33,7 +36,7 @@ class OneOfTypeTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($types, $oneOfType->getTypes());
     }
 
-    public function providerGetDeclaration()
+    public function providerGetDeclaration(): array
     {
         return [
             [['integer'], '(integer)'],
@@ -41,7 +44,7 @@ class OneOfTypeTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
-    public function testValidateReturnsTrue()
+    public function testValidateReturnsTrue(): void
     {
         $key = 'foo';
         $value = 'bar';
@@ -79,7 +82,7 @@ class OneOfTypeTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($type->validate($key, $value, $collector));
     }
 
-    public function testValidateReturnsFalse()
+    public function testValidateReturnsFalse(): void
     {
         $key = 'foo';
         $value = 'bar';
@@ -122,7 +125,7 @@ class OneOfTypeTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($type->validate($key, $value, $collector));
     }
 
-    public function testUnion()
+    public function testUnion(): void
     {
         $type1 = $this->createMock(TypeInterface::class);
         $type2 = $this->createMock(TypeInterface::class);

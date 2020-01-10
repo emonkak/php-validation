@@ -1,8 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Validation;
 
-class ConstraintError
+use Emonkak\Validation\Constraint\ConstraintInterface;
+
+class ConstraintError implements ErrorInterface
 {
     /**
      * @var string
@@ -19,22 +23,14 @@ class ConstraintError
      */
     private $constraint;
 
-    /**
-     * @param string              $key
-     * @param mixed               $value
-     * @param ConstraintInterface $constraint
-     */
-    public function __construct($key, $value, $constraint)
+    public function __construct(string $key, $value, ConstraintInterface $constraint)
     {
         $this->key = $key;
         $this->value = $value;
         $this->constraint = $constraint;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function __toString()
+    public function __toString(): string
     {
         return sprintf(
             'The property `%s` must satisfy the constraint `%s`, got `%s`.',
@@ -44,26 +40,17 @@ class ConstraintError
         );
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getKey()
+    public function getKey(): string
     {
         return $this->key;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getValue()
     {
         return $this->value;
     }
 
-    /**
-     * @return ConstraintInterface
-     */
-    public function getConstraint()
+    public function getConstraint(): ConstraintInterface
     {
         return $this->constraint;
     }

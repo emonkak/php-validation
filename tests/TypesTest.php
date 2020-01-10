@@ -1,19 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Validation\Tests;
 
 use Emonkak\Validation\Collector\CollectorInterface;
 use Emonkak\Validation\Types;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Emonkak\Validation\Types
  */
-class TypesTest extends \PHPUnit_Framework_TestCase
+class TypesTest extends TestCase
 {
     /**
      * @dataProvider providerAny
      */
-    public function testAny($value, $expectedResult)
+    public function testAny($value, bool $expectedResult): void
     {
         $key = 'key';
         $type = Types::any();
@@ -23,7 +26,7 @@ class TypesTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('any', $type->getDeclaration());
     }
 
-    public function providerAny()
+    public function providerAny(): array
     {
         return [
             [0, true],
@@ -39,7 +42,7 @@ class TypesTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider providerDate
      */
-    public function testDate($value, $expectedResult)
+    public function testDate($value, bool $expectedResult): void
     {
         $key = 'key';
         $type = Types::date();
@@ -49,7 +52,7 @@ class TypesTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('string', $type->getDeclaration());
     }
 
-    public function providerDate()
+    public function providerDate(): array
     {
         return [
             ['2000-01-01', true],
@@ -71,7 +74,7 @@ class TypesTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider providerDateTime
      */
-    public function testDateTime($value, $expectedResult)
+    public function testDateTime($value, bool $expectedResult): void
     {
         $key = 'key';
         $type = Types::dateTime();
@@ -81,7 +84,7 @@ class TypesTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('string', $type->getDeclaration());
     }
 
-    public function providerDateTime()
+    public function providerDateTime(): array
     {
         return [
             ['2000-01-01 00:00:00', true],
@@ -103,7 +106,7 @@ class TypesTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider providerTime
      */
-    public function testTime($value, $expectedResult)
+    public function testTime($value, bool $expectedResult): void
     {
         $key = 'key';
         $type = Types::time();
@@ -113,7 +116,7 @@ class TypesTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('string', $type->getDeclaration());
     }
 
-    public function providerTime()
+    public function providerTime(): array
     {
         return [
             ['00:00:00', true],
@@ -128,7 +131,7 @@ class TypesTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider providerString
      */
-    public function testString($value, $expectedResult)
+    public function testString($value, bool $expectedResult): void
     {
         $key = 'key';
         $type = Types::string();
@@ -138,7 +141,7 @@ class TypesTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('string', $type->getDeclaration());
     }
 
-    public function providerString()
+    public function providerString(): array
     {
         return [
             ['', true],
@@ -154,7 +157,7 @@ class TypesTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider providerStringLength
      */
-    public function testStringLength($value, $minLength, $maxLength, $expectedResult)
+    public function testStringLength($value, int $minLength, int $maxLength, bool $expectedResult): void
     {
         $key = 'key';
         $type = Types::string($minLength, $maxLength);
@@ -164,7 +167,7 @@ class TypesTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('string', $type->getDeclaration());
     }
 
-    public function providerStringLength()
+    public function providerStringLength(): array
     {
         return [
             ['', 1, 3, false],
@@ -178,7 +181,7 @@ class TypesTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider providerInt
      */
-    public function testInt($value, $expectedResult)
+    public function testInt($value, bool $expectedResult): void
     {
         $key = 'key';
         $type = Types::int();
@@ -188,7 +191,7 @@ class TypesTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('integer', $type->getDeclaration());
     }
 
-    public function providerInt()
+    public function providerInt(): array
     {
         return [
             [1, true],
@@ -206,7 +209,7 @@ class TypesTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider providerIntBetween
      */
-    public function testIntBetween($value, $min, $max, $expectedResult)
+    public function testIntBetween($value, int $min, int $max, bool $expectedResult): void
     {
         $key = 'key';
         $type = Types::int($min, $max);
@@ -216,7 +219,7 @@ class TypesTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('integer', $type->getDeclaration());
     }
 
-    public function providerIntBetween()
+    public function providerIntBetween(): array
     {
         return [
             [0, 1, 3, false],
@@ -235,7 +238,7 @@ class TypesTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider providerFloat
      */
-    public function testFloat($value, $expectedResult)
+    public function testFloat($value, bool $expectedResult): void
     {
         $key = 'key';
         $type = Types::float();
@@ -245,7 +248,7 @@ class TypesTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('double', $type->getDeclaration());
     }
 
-    public function providerFloat()
+    public function providerFloat(): array
     {
         return [
             [0.0, true],
@@ -267,7 +270,7 @@ class TypesTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider providerFloatBetween
      */
-    public function testFloatBetween($value, $min, $max, $expectedResult)
+    public function testFloatBetween($value, float $min, float $max, bool $expectedResult): void
     {
         $key = 'key';
         $type = Types::float($min, $max);
@@ -277,7 +280,7 @@ class TypesTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('double', $type->getDeclaration());
     }
 
-    public function providerFloatBetween()
+    public function providerFloatBetween(): array
     {
         return [
             [0.0, 1, 3, false],
@@ -296,7 +299,7 @@ class TypesTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider providerBool
      */
-    public function testBool($value, $expectedResult)
+    public function testBool($value, bool $expectedResult): void
     {
         $key = 'key';
         $type = Types::bool();
@@ -306,7 +309,7 @@ class TypesTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('boolean', $type->getDeclaration());
     }
 
-    public function providerBool()
+    public function providerBool(): array
     {
         return [
             [true, true],
@@ -328,7 +331,7 @@ class TypesTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider providerDigit
      */
-    public function testDigit($value, $expectedResult)
+    public function testDigit($value, bool $expectedResult): void
     {
         $key = 'key';
         $type = Types::digit();
@@ -338,7 +341,7 @@ class TypesTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('any', $type->getDeclaration());
     }
 
-    public function providerDigit()
+    public function providerDigit(): array
     {
         return [
             [1, true],
@@ -360,7 +363,7 @@ class TypesTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider providerDecimal
      */
-    public function testDecimal($value, $expectedResult)
+    public function testDecimal($value, bool $expectedResult): void
     {
         $key = 'key';
         $type = Types::decimal();
@@ -370,7 +373,7 @@ class TypesTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('any', $type->getDeclaration());
     }
 
-    public function providerDecimal()
+    public function providerDecimal(): array
     {
         return [
             [1, true],
@@ -392,7 +395,7 @@ class TypesTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider providerAccepted
      */
-    public function testAccepted($value, $expectedResult)
+    public function testAccepted($value, bool $expectedResult): void
     {
         $key = 'key';
         $type = Types::accepted();
@@ -402,7 +405,7 @@ class TypesTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('any', $type->getDeclaration());
     }
 
-    public function providerAccepted()
+    public function providerAccepted(): array
     {
         return [
             [1, true],
@@ -421,7 +424,7 @@ class TypesTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
-    public function testArrayOf()
+    public function testArrayOf(): void
     {
         $key = 'key';
         $type = Types::arrayOf(Types::int());
@@ -435,12 +438,11 @@ class TypesTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('integer[]', $type->getDeclaration());
     }
 
-    public function testClassOf()
+    public function testClassOf(): void
     {
         $key = 'key';
         $type = Types::classOf(\DateTime::class);
         $collector = $this->createMock(CollectorInterface::class);
-
 
         $this->assertTrue($type->validate($key, new \DateTime(), $collector));
         $this->assertFalse($type->validate($key, new \DateTimeImmutable(), $collector));
@@ -448,7 +450,7 @@ class TypesTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(\DateTime::class, $type->getDeclaration());
     }
 
-    public function testOneOf()
+    public function testOneOf(): void
     {
         $key = 'key';
         $type = Types::oneOf(['foo', 'bar']);
@@ -461,7 +463,7 @@ class TypesTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('("foo"|"bar")', $type->getDeclaration());
     }
 
-    public function testOneOfType()
+    public function testOneOfType(): void
     {
         $key = 'key';
         $type = Types::oneOfType([Types::int(), Types::string()]);
@@ -474,7 +476,7 @@ class TypesTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('(integer|string)', $type->getDeclaration());
     }
 
-    public function testShape()
+    public function testShape(): void
     {
         $key = 'key';
         $type = Types::shape('Foo', [

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Validation\Constraint;
 
 class Length implements ConstraintInterface
@@ -14,11 +16,7 @@ class Length implements ConstraintInterface
      */
     private $maxLength;
 
-    /**
-     * @param int $minLength
-     * @param int $maxLength
-     */
-    public function __construct($minLength, $maxLength)
+    public function __construct(int $minLength, int $maxLength)
     {
         if ($minLength > $maxLength) {
             throw new \InvalidArgumentException('`$minLength` must be less than `$maxLength` or equal.');
@@ -28,18 +26,12 @@ class Length implements ConstraintInterface
         $this->maxLength = $maxLength;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getDeclaration()
+    public function getDeclaration(): string
     {
         return "The string length must be between {$this->minLength} and {$this->maxLength}.";
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function isSatisfiedBy($value)
+    public function isSatisfiedBy($value): bool
     {
         $length = mb_strlen($value);
         return $this->minLength <= $length && $length <= $this->maxLength;

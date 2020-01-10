@@ -1,14 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Validation\Tests\Type;
 
 use Emonkak\Validation\Collector\CollectorInterface;
 use Emonkak\Validation\Type\OneOf;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Emonkak\Validation\Type\OneOf
  */
-class OneOfTest extends \PHPUnit_Framework_TestCase
+class OneOfTest extends TestCase
 {
     /**
      * @dataProvider providerGetDeclaration

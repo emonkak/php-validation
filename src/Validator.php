@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Validation;
 
 use Emonkak\Validation\Collector\ErrorCollector;
@@ -8,12 +10,12 @@ use Emonkak\Validation\Type\TypeInterface;
 class Validator
 {
     /**
-     * @var array<string, TypeInterface>
+     * @var array<string,TypeInterface>
      */
     private $types;
 
     /**
-     * @param array<string, TypeInterface> $types
+     * @param array<string,TypeInterface> $types
      */
     public function __construct(array $types)
     {
@@ -21,10 +23,9 @@ class Validator
     }
 
     /**
-     * @param array<string, mixed> $data
-     * @return ErrorBagInterface
+     * @param array<string,mixed> $data
      */
-    public function validate(array $data)
+    public function validate(array $data): ErrorBagInterface
     {
         $collector = new ErrorCollector();
 

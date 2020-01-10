@@ -1,24 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Validation\Tests\Constraint;
 
 use Emonkak\Validation\Collector\CollectorInterface;
 use Emonkak\Validation\Constraint\Between;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Emonkak\Validation\Constraint\Between
  */
-class BetweenTest extends \PHPUnit_Framework_TestCase
+class BetweenTest extends TestCase
 {
     /**
      * @expectedException InvalidArgumentException
      */
-    public function testConstructorThrowsInvalidArgumentException()
+    public function testConstructorThrowsInvalidArgumentException(): void
     {
         new Between(3, 1);
     }
 
-    public function testGetDeclaration()
+    public function testGetDeclaration(): void
     {
         $this->assertNotEmpty((new Between(1, 3))->getDeclaration());
     }
@@ -26,13 +29,13 @@ class BetweenTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider providerIsSatisfiedBy
      */
-    public function testIsSatisfiedBy($value, $expectedResult)
+    public function testIsSatisfiedBy($value, $expectedResult): void
     {
         $constraint = new Between(1, 3);
         $this->assertSame($expectedResult, $constraint->isSatisfiedBy($value));
     }
 
-    public function providerIsSatisfiedBy()
+    public function providerIsSatisfiedBy(): array
     {
         return [
             [0, false],

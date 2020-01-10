@@ -1,17 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Validation\Tests\Type;
 
 use Emonkak\Validation\Collector\CollectorInterface;
 use Emonkak\Validation\Type\Optional;
 use Emonkak\Validation\Type\TypeInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Emonkak\Validation\Type\Optional
  */
-class OptionalTest extends \PHPUnit_Framework_TestCase
+class OptionalTest extends TestCase
 {
-    public function testGetType()
+    public function testGetType(): void
     {
         $type = $this->createMock(TypeInterface::class);
         $optionalType = new Optional($type);
@@ -22,7 +25,7 @@ class OptionalTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider providerGetDeclaration
      */
-    public function testGetDeclaration($declaration, $expectedDeclaration)
+    public function testGetDeclaration($declaration, $expectedDeclaration): void
     {
         $type = $this->createMock(TypeInterface::class);
         $type
@@ -33,7 +36,7 @@ class OptionalTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expectedDeclaration, (new Optional($type))->getDeclaration());
     }
 
-    public function providerGetDeclaration()
+    public function providerGetDeclaration(): array
     {
         return [
             ['integer', '?integer'],
@@ -41,7 +44,7 @@ class OptionalTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
-    public function testValidateReturnsTrue()
+    public function testValidateReturnsTrue(): void
     {
         $key = 'foo';
         $value = 123;
@@ -65,7 +68,7 @@ class OptionalTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($optionalType->validate($key, null, $collector));
     }
 
-    public function testValidateReturnsFalse()
+    public function testValidateReturnsFalse(): void
     {
         $key = 'foo';
         $value = 123;
