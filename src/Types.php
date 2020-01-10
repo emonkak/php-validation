@@ -34,6 +34,11 @@ final class Types
         return new Any();
     }
 
+    public static function array(): TypeInterface
+    {
+        return new Primitive('array');
+    }
+
     public static function date(): TypeInterface
     {
         return (new Primitive('string'))

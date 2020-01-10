@@ -40,6 +40,33 @@ class TypesTest extends TestCase
     }
 
     /**
+     * @dataProvider providerArray
+     */
+    public function testArray($value, bool $expectedResult): void
+    {
+        $key = 'key';
+        $type = Types::array();
+        $collector = $this->createMock(CollectorInterface::class);
+
+        $this->assertSame($expectedResult, $type->validate($key, $value, $collector));
+        $this->assertSame('array', $type->getDeclaration());
+    }
+
+    public function providerArray(): array
+    {
+        return [
+            [0, false],
+            [1, false],
+            ['', false],
+            ['foo', false],
+            [true, false],
+            [false, false],
+            [null, false],
+            [[], true]
+        ];
+    }
+
+    /**
      * @dataProvider providerDate
      */
     public function testDate($value, bool $expectedResult): void
