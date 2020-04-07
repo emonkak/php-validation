@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Emonkak\Validation;
 
 use Emonkak\Validation\Constraint\Between;
+use Emonkak\Validation\Constraint\DateTime;
 use Emonkak\Validation\Constraint\Filter;
 use Emonkak\Validation\Constraint\Length;
 use Emonkak\Validation\Constraint\Matches;
@@ -48,7 +49,7 @@ final class Types
     public static function dateTime(): TypeInterface 
     {
         return (new Primitive('string'))
-           ->withConstraints(new Matches('/^' . self::DATE_PATTERN . ' ' . self::TIME_PATTERN . '$/'));
+           ->withConstraints(new DateTime());
     }
 
     public static function time(): TypeInterface 
