@@ -16,6 +16,19 @@ use PHPUnit\Framework\TestCase;
  */
 class ValidatorTest extends TestCase
 {
+    public function testGetTypes(): void
+    {
+        $types = [
+            'foo' => $this->createMock(TypeInterface::class),
+            'bar' => $this->createMock(TypeInterface::class),
+            'baz' => $this->createMock(TypeInterface::class)
+        ];
+
+        $validator = new Validator($types);
+
+        $this->assertSame($types, $validator->getTypes());
+    }
+
     public function testValidate(): void
     {
         $types = [

@@ -23,6 +23,14 @@ class Validator
     }
 
     /**
+     * @return array<string,TypeInterface>
+     */
+    public function getTypes(): array
+    {
+        return $this->types;
+    }
+
+    /**
      * @param array<string,mixed> $data
      */
     public function validate(array $data): ErrorBagInterface
