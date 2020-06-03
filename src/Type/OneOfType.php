@@ -43,6 +43,9 @@ class OneOfType implements TypeInterface
         return '(' . implode('|', $declarations) . ')';
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function validate(string $key, $value, CollectorInterface $collector): bool
     {
         $isValid = false;

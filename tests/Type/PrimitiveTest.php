@@ -9,7 +9,7 @@ use Emonkak\Validation\Type\Primitive;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers Emonkak\Validation\Type\Primitive
+ * @covers \Emonkak\Validation\Type\Primitive
  */
 class PrimitiveTest extends TestCase
 {
@@ -77,7 +77,7 @@ class PrimitiveTest extends TestCase
             ['string', true],
             ['string', false],
             ['string', 1],
-            ['string', 0]
+            ['string', 0],
         ];
     }
 }

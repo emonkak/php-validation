@@ -9,7 +9,7 @@ use Emonkak\Validation\Types;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers Emonkak\Validation\Types
+ * @covers \Emonkak\Validation\Types
  */
 class TypesTest extends TestCase
 {
@@ -35,7 +35,7 @@ class TypesTest extends TestCase
             ['foo', true],
             [true, true],
             [false, true],
-            [null, false]
+            [null, false],
         ];
     }
 
@@ -62,7 +62,7 @@ class TypesTest extends TestCase
             [true, false],
             [false, false],
             [null, false],
-            [[], true]
+            [[], true],
         ];
     }
 
@@ -453,7 +453,6 @@ class TypesTest extends TestCase
         $key = 'key';
         $type = Types::arrayOf(Types::int());
         $collector = $this->createMock(CollectorInterface::class);
-
 
         $this->assertTrue($type->validate($key, [], $collector));
         $this->assertTrue($type->validate($key, [1, 2, 3], $collector));

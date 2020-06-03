@@ -15,6 +15,9 @@ class Any implements TypeInterface
         return 'any';
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function validate(string $key, $value, CollectorInterface $collector): bool
     {
         if ($value === null) {

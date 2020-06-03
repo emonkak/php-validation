@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace Emonkak\Validation\Tests\Constraint;
 
-use Emonkak\Validation\Collector\CollectorInterface;
 use Emonkak\Validation\Constraint\DateTime;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers Emonkak\Validation\Constraint\DateTime
+ * @covers \Emonkak\Validation\Constraint\DateTime
  */
 class DateTimeTest extends TestCase
 {

@@ -21,7 +21,6 @@ class Shape implements TypeInterface
     private $types;
 
     /**
-     * @param string $declaration
      * @param array<string,TypeInterface> $types
      */
     public function __construct(string $declaration, array $types)
@@ -43,6 +42,9 @@ class Shape implements TypeInterface
         return $this->declaration;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function validate(string $key, $value, CollectorInterface $collector): bool
     {
         if (!is_array($value)) {

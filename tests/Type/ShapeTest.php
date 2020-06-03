@@ -10,14 +10,14 @@ use Emonkak\Validation\Type\TypeInterface;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers Emonkak\Validation\Type\Shape
+ * @covers \Emonkak\Validation\Type\Shape
  */
 class ShapeTest extends TestCase
 {
     public function testGetDeclaration(): void
     {
         $types = [
-            'foo' => $this->createMock(TypeInterface::class)
+            'foo' => $this->createMock(TypeInterface::class),
         ];
         $shape = new Shape('Foo', $types);
 

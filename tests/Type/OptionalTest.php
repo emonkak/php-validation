@@ -10,7 +10,7 @@ use Emonkak\Validation\Type\TypeInterface;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers Emonkak\Validation\Type\Optional
+ * @covers \Emonkak\Validation\Type\Optional
  */
 class OptionalTest extends TestCase
 {
@@ -40,7 +40,7 @@ class OptionalTest extends TestCase
     {
         return [
             ['integer', '?integer'],
-            ['(integer|string)', '?(integer|string)']
+            ['(integer|string)', '?(integer|string)'],
         ];
     }
 

@@ -4,17 +4,16 @@ declare(strict_types=1);
 
 namespace Emonkak\Validation\Tests\Constraint;
 
-use Emonkak\Validation\Collector\CollectorInterface;
 use Emonkak\Validation\Constraint\Between;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers Emonkak\Validation\Constraint\Between
+ * @covers \Emonkak\Validation\Constraint\Between
  */
 class BetweenTest extends TestCase
 {
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      */
     public function testConstructorThrowsInvalidArgumentException(): void
     {
@@ -42,7 +41,7 @@ class BetweenTest extends TestCase
             [1, true],
             [2, true],
             [3, true],
-            [4, false]
+            [4, false],
         ];
     }
 }

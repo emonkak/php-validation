@@ -9,7 +9,7 @@ use Emonkak\Validation\Type\OneOf;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers Emonkak\Validation\Type\OneOf
+ * @covers \Emonkak\Validation\Type\OneOf
  */
 class OneOfTest extends TestCase
 {
@@ -28,7 +28,7 @@ class OneOfTest extends TestCase
     {
         return [
             [['foo'], '("foo")'],
-            [['foo', 'bar'], '("foo"|"bar")']
+            [['foo', 'bar'], '("foo"|"bar")'],
         ];
     }
 
@@ -54,7 +54,7 @@ class OneOfTest extends TestCase
             [123, [123, 456], true],
             [456, [123, 456], true],
             ['123', [123, 456], false],
-            ['456', [123, 456], false]
+            ['456', [123, 456], false],
         ];
     }
 
@@ -85,7 +85,7 @@ class OneOfTest extends TestCase
             [123, [], true],
             ['123', [123], true],
             ['foo', [123, 456], true],
-            [null, [123, 456], true]
+            [null, [123, 456], true],
         ];
     }
 }

@@ -10,7 +10,7 @@ use Emonkak\Validation\Type\TypeInterface;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers Emonkak\Validation\Type\ArrayOf
+ * @covers \Emonkak\Validation\Type\ArrayOf
  */
 class ArrayOfTest extends TestCase
 {
@@ -35,7 +35,7 @@ class ArrayOfTest extends TestCase
     {
         return [
             ['integer', 'integer[]'],
-            ['(integer|string)', '(integer|string)[]']
+            ['(integer|string)', '(integer|string)[]'],
         ];
     }
 
@@ -45,7 +45,7 @@ class ArrayOfTest extends TestCase
         $value = [
             123,
             456,
-            789
+            789,
         ];
 
         $collector = $this->createMock(CollectorInterface::class);
@@ -93,7 +93,7 @@ class ArrayOfTest extends TestCase
         $value = [
             123,
             true,
-            false
+            false,
         ];
 
         $collector = $this->createMock(CollectorInterface::class);

@@ -9,7 +9,7 @@ use Emonkak\Validation\Type\Any;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers Emonkak\Validation\Type\Any
+ * @covers \Emonkak\Validation\Type\Any
  */
 class AnyTest extends TestCase
 {
@@ -41,7 +41,7 @@ class AnyTest extends TestCase
             [false],
             ['foo'],
             [0],
-            [1]
+            [1],
         ];
     }
 

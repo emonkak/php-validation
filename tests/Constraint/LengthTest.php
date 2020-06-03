@@ -4,17 +4,16 @@ declare(strict_types=1);
 
 namespace Emonkak\Validation\Tests\Constraint;
 
-use Emonkak\Validation\Collector\CollectorInterface;
 use Emonkak\Validation\Constraint\Length;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers Emonkak\Validation\Constraint\Length
+ * @covers \Emonkak\Validation\Constraint\Length
  */
 class LengthTest extends TestCase
 {
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      */
     public function testConstructorThrowsInvalidArgumentException(): void
     {
@@ -42,7 +41,7 @@ class LengthTest extends TestCase
             ['f', true],
             ['fo', true],
             ['foo', true],
-            ['fooo', false]
+            ['fooo', false],
         ];
     }
 }

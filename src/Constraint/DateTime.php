@@ -11,6 +11,9 @@ class DateTime implements ConstraintInterface
         return 'The string must be a valid date and time format.';
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function isSatisfiedBy($value): bool
     {
         if (strtotime($value) === false) {

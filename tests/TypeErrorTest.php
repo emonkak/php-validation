@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Emonkak\Validation\Tests;
 
-use Emonkak\Validation\TypeError;
 use Emonkak\Validation\Type\TypeInterface;
+use Emonkak\Validation\TypeError;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers Emonkak\Validation\TypeError
+ * @covers \Emonkak\Validation\TypeError
  */
 class TypeErrorTest extends TestCase
 {

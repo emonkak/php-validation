@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace Emonkak\Validation\Tests\Constraint;
 
-use Emonkak\Validation\Collector\CollectorInterface;
 use Emonkak\Validation\Constraint\Matches;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers Emonkak\Validation\Constraint\Matches
+ * @covers \Emonkak\Validation\Constraint\Matches
  */
 class MatchesTest extends TestCase
 {

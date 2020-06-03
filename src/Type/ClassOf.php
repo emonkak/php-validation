@@ -28,6 +28,9 @@ class ClassOf implements TypeInterface
         return $this->class;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function validate(string $key, $value, CollectorInterface $collector): bool
     {
         if (!($value instanceof $this->class)) {

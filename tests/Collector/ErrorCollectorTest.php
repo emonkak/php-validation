@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace Emonkak\Validation\Tests\Collector;
 
 use Emonkak\Validation\Collector\ErrorCollector;
-use Emonkak\Validation\ConstraintError;
 use Emonkak\Validation\Constraint\ConstraintInterface;
-use Emonkak\Validation\TypeError;
+use Emonkak\Validation\ConstraintError;
 use Emonkak\Validation\Type\TypeInterface;
+use Emonkak\Validation\TypeError;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers Emonkak\Validation\Collector\ErrorCollector
+ * @covers \Emonkak\Validation\Collector\ErrorCollector
  */
 class ErrorCollectorTest extends TestCase
 {
