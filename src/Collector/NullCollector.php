@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Emonkak\Validation\Collector;
 
-use Emonkak\Validation\Type\TypeInterface;
 use Emonkak\Validation\Constraint\ConstraintInterface;
+use Emonkak\Validation\Type\TypeInterface;
 
 class NullCollector implements CollectorInterface
 {

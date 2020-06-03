@@ -8,5 +8,8 @@ interface ConstraintInterface
 {
     public function getDeclaration(): string;
 
+    /**
+     * @param mixed $value
+     */
     public function isSatisfiedBy($value): bool;
 }

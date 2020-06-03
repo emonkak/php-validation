@@ -21,6 +21,9 @@ class Filter implements ConstraintInterface
      */
     private $options;
 
+    /**
+     * @param ?mixed $options
+     */
     public function __construct(string $filter, $options = null)
     {
         $filterId = filter_id($filter);
@@ -38,6 +41,9 @@ class Filter implements ConstraintInterface
         return "The value must satisfy the validate filter: {$this->filter}.";
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function isSatisfiedBy($value): bool
     {
         $result = $this->options !== null

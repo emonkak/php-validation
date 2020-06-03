@@ -10,7 +10,7 @@ use Emonkak\Validation\Type\TypeInterface;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers Emonkak\Validation\Collector\NullCollector
+ * @covers \Emonkak\Validation\Collector\NullCollector
  */
 class NullCollectorTest extends TestCase
 {

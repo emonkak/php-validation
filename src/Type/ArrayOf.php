@@ -15,9 +15,6 @@ class ArrayOf implements TypeInterface
      */
     private $type;
 
-    /**
-     * @param TypeInterface $type
-     */
     public function __construct(TypeInterface $type)
     {
         $this->type = $type;
@@ -34,6 +31,9 @@ class ArrayOf implements TypeInterface
         return $declaration . '[]';
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function validate(string $key, $value, CollectorInterface $collector): bool
     {
         if (!is_array($value)) {

@@ -46,34 +46,38 @@ final class Types
            ->withConstraints(new Matches('/^' . self::DATE_PATTERN . '$/'));
     }
 
-    public static function dateTime(): TypeInterface 
+    public static function dateTime(): TypeInterface
     {
         return (new Primitive('string'))
            ->withConstraints(new DateTime());
     }
 
-    public static function time(): TypeInterface 
+    public static function time(): TypeInterface
     {
         return (new Primitive('string'))
            ->withConstraints(new Matches('/^' . self::TIME_PATTERN . '$/'));
     }
 
-    public static function string(int $minLength = 0, int $maxLength = PHP_INT_MAX): TypeInterface 
+    public static function string(int $minLength = null, int $maxLength = null): TypeInterface
     {
         $type = new Primitive('string');
 
-        if ($minLength !== 0 || $maxLength !== INF) {
+        if ($minLength !== 0 || $maxLength !== PHP_INT_MAX) {
+            $minLength = $minLength ?? 0;
+            $maxLength = $maxLength ?? INF;
             $type = $type->withConstraints(new Length($minLength, $maxLength));
         }
 
         return $type;
     }
 
-    public static function int(int $min = PHP_INT_MIN, int $max = PHP_INT_MAX): TypeInterface
+    public static function int(int $min = null, int $max = null): TypeInterface
     {
         $type = new Primitive('integer');
 
-        if ($min !== -INF || $max !== INF) {
+        if ($min !== null || $max !== null) {
+            $min = $min ?? -INF;
+            $max = $max ?? INF;
             $type = $type->withConstraints(new Between($min, $max));
         }
 

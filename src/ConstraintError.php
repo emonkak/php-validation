@@ -23,6 +23,9 @@ class ConstraintError implements ErrorInterface
      */
     private $constraint;
 
+    /**
+     * @param mixed $value
+     */
     public function __construct(string $key, $value, ConstraintInterface $constraint)
     {
         $this->key = $key;
@@ -45,6 +48,9 @@ class ConstraintError implements ErrorInterface
         return $this->key;
     }
 
+    /**
+     * @return mixed
+     */
     public function getValue()
     {
         return $this->value;

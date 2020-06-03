@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Emonkak\Validation\Tests;
 
-use Emonkak\Validation\ConstraintError;
 use Emonkak\Validation\Constraint\ConstraintInterface;
+use Emonkak\Validation\ConstraintError;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers Emonkak\Validation\ConstraintError
+ * @covers \Emonkak\Validation\ConstraintError
  */
 class ConstraintErrorTest extends TestCase
 {

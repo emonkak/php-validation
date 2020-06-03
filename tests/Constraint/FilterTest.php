@@ -8,12 +8,12 @@ use Emonkak\Validation\Constraint\Filter;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers Emonkak\Validation\Constraint\Filter
+ * @covers \Emonkak\Validation\Constraint\Filter
  */
 class FilterTest extends TestCase
 {
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      */
     public function testConstructorThrowsInvalidArgumentException(): void
     {
@@ -60,7 +60,7 @@ class FilterTest extends TestCase
             ['boolean', FILTER_NULL_ON_FAILURE, 'foo', false],
             ['boolean', FILTER_NULL_ON_FAILURE, 100, false],
             ['int', null, 'foo', false],
-            ['float', null, 'bar', false]
+            ['float', null, 'bar', false],
         ];
     }
 }

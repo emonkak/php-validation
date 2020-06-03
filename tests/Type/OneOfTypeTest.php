@@ -10,7 +10,7 @@ use Emonkak\Validation\Type\TypeInterface;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers Emonkak\Validation\Type\OneOfType
+ * @covers \Emonkak\Validation\Type\OneOfType
  */
 class OneOfTypeTest extends TestCase
 {
@@ -40,7 +40,7 @@ class OneOfTypeTest extends TestCase
     {
         return [
             [['integer'], '(integer)'],
-            [['integer', 'string'], '(integer|string)']
+            [['integer', 'string'], '(integer|string)'],
         ];
     }
 
@@ -51,7 +51,7 @@ class OneOfTypeTest extends TestCase
 
         $unionTypes = [
             $this->createMock(TypeInterface::class),
-            $this->createMock(TypeInterface::class)
+            $this->createMock(TypeInterface::class),
         ];
         $type = new OneOfType($unionTypes);
 
@@ -89,7 +89,7 @@ class OneOfTypeTest extends TestCase
 
         $unionTypes = [
             $this->createMock(TypeInterface::class),
-            $this->createMock(TypeInterface::class)
+            $this->createMock(TypeInterface::class),
         ];
         $type = new OneOfType($unionTypes);
 

@@ -48,6 +48,9 @@ class Constrained implements TypeInterface
         return $this->type->getDeclaration();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function validate(string $key, $value, CollectorInterface $collector): bool
     {
         if (!$this->type->validate($key, $value, $collector)) {

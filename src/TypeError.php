@@ -23,6 +23,9 @@ class TypeError implements ErrorInterface
      */
     private $expectedType;
 
+    /**
+     * @param mixed $value
+     */
     public function __construct(string $key, $value, TypeInterface $expectedType)
     {
         $this->key = $key;

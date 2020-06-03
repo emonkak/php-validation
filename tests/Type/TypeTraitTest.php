@@ -8,13 +8,12 @@ use Emonkak\Validation\Collector\CollectorInterface;
 use Emonkak\Validation\Constraint\ConstraintInterface;
 use Emonkak\Validation\Type\Constrained;
 use Emonkak\Validation\Type\OneOfType;
-use Emonkak\Validation\Type\Optional;
 use Emonkak\Validation\Type\TypeInterface;
 use Emonkak\Validation\Type\TypeTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers Emonkak\Validation\Type\TypeTrait
+ * @covers \Emonkak\Validation\Type\TypeTrait
  */
 class TypeTraitTest extends TestCase
 {

@@ -21,6 +21,9 @@ class Matches implements ConstraintInterface
         return "The string must match the pattern of `{$this->pattern}`.";
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function isSatisfiedBy($value): bool
     {
         return preg_match($this->pattern, $value) === 1;

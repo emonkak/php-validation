@@ -9,7 +9,7 @@ use Emonkak\Validation\Type\ClassOf;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers Emonkak\Validation\Type\ClassOf
+ * @covers \Emonkak\Validation\Type\ClassOf
  */
 class ClassOfTest extends TestCase
 {
@@ -42,7 +42,7 @@ class ClassOfTest extends TestCase
         return [
             [\DateTime::class, new \DateTime()],
             [\DateTimeInterface::class, new \DateTime()],
-            [\DateTimeInterface::class, new \DateTimeImmutable()]
+            [\DateTimeInterface::class, new \DateTimeImmutable()],
         ];
     }
 
@@ -72,7 +72,7 @@ class ClassOfTest extends TestCase
         return [
             [\DateTime::class, new \DateTimeImmutable()],
             [\DateTimeImmutable::class, new \DateTime()],
-            [\DateTimeInterface::class, null]
+            [\DateTimeInterface::class, null],
         ];
     }
 }

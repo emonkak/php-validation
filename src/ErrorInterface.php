@@ -8,10 +8,10 @@ interface ErrorInterface
 {
     public function __toString(): string;
 
-    /**
-     * @return string
-     */
     public function getKey(): string;
 
+    /**
+     * @return mixed
+     */
     public function getValue();
 }

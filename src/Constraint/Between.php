@@ -35,6 +35,9 @@ class Between implements ConstraintInterface
         return "The number must be between {$this->min} and {$this->max}.";
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function isSatisfiedBy($value): bool
     {
         return $this->min <= $value && $value <= $this->max;

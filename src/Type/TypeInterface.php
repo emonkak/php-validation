@@ -11,6 +11,9 @@ interface TypeInterface
 {
     public function getDeclaration(): string;
 
+    /**
+     * @param mixed $value
+     */
     public function validate(string $key, $value, CollectorInterface $collector): bool;
 
     public function allowEmpty(): TypeInterface;

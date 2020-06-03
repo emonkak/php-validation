@@ -25,6 +25,9 @@ class Primitive implements TypeInterface
         return $this->declaration;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function validate(string $key, $value, CollectorInterface $collector): bool
     {
         if (gettype($value) !== $this->declaration) {
